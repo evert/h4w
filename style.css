@@ -1,0 +1,120 @@
+@font-face {
+  font-family: 'winsystem';
+  src: url('font/system-font.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+* {
+  --scale: 2;
+  --windows-grey: #c0c0c0;
+
+  --window-title: #000080;
+  --window-background: #fff;
+
+  --bar-height: calc(18px * var(--scale));
+  --font-size: calc(12px * var(--scale));
+  --unit-size: calc(1px * var(--scale));
+
+}
+
+body {
+  background: url('image/bg/Castle.gif');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'winsystem', sans-serif;
+  font-size: var(--font-size);
+}
+
+* {
+  /* only correct choice */
+  box-sizing: border-box;
+  /** same font, same size everywhere */
+
+}
+
+hw-window {
+  display:block;
+  border: 2px solid black;              /* inner black */
+  box-shadow:
+    0 0 0 4px var(--windows-grey),     /* middle grey */
+    0 0 0 6px black;                   /* outer black */
+
+  display: flex;
+  flex-direction: column;
+  background: black;
+  gap: var(--unit-size);
+
+  > * {
+    background-color: var(--window-background);
+  }
+
+  h1 {
+    background: var(--window-title);
+    font-weight: normal;
+    font-size: var(--font-size);
+    color: white;
+    height: var(--bar-height);
+    margin:0;
+    text-align: center;
+    padding: var(--unit-size);
+  }
+
+  menu {
+    margin: 0;
+    height: var(--bar-height);
+    display: flex;
+    padding-left: calc(8px * var(--scale));
+    gap: calc(8px * var(--scale));
+    li {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      gap: 5px;
+
+      &:hover {
+        background-color: var(--window-title);
+        color: white;
+      }
+    }
+
+  }
+
+
+
+}
+
+hw-icongrid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: calc(8px * var(--scale));
+
+  hw-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--unit-size);
+
+    img {
+      width: calc(32px * var(--scale));
+      height: calc(32px * var(--scale));
+    }
+    span { 
+      font-size: 80%;
+    }
+    
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
