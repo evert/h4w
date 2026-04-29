@@ -167,12 +167,20 @@ hw-icongrid {
   flex: 1;
 
   hw-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: calc(64px * var(--scale));
-    gap: calc(4px * var(--scale));
 
+    a {
+      text-decoration: none;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: calc(64px * var(--scale));
+      gap: calc(4px * var(--scale));
+    }
+    a:focus span {
+      background-color: var(--window-title);
+      color: white;
+    }
     img {
       width: calc(32px * var(--scale));
       height: calc(32px * var(--scale));
@@ -180,6 +188,7 @@ hw-icongrid {
     }
 
     span {
+      padding: var(--unit-size);
       font-size: var(--font-size-sm);
       font-family: 'ms-sans-serif', sans-serif;
       text-align: center;

@@ -2,14 +2,25 @@
   "name": "hl4wg",
   "version": "0.0.1",
   "description": "A fun homelab homepage",
+  "type": "module",
+  "main": "./index.ts",
   "keywords": [
     "homelab",
     "self-hosted",
     "home page"
   ],
-  "main": "index.js",
   "author": {
     "name": "Evert Pot",
     "email": "me@evertpot.com"
+  },
+  "scripts": {
+    "start": "node index.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.0.0",
+    "hono": "^4.12.15"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0"
   }
 }

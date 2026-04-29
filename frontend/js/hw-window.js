@@ -46,7 +46,7 @@ class HwWindow extends HTMLElement {
       this.querySelector(".content").innerHTML = newContent;
     } else if (newContent[0] instanceof HTMLElement) {
       const contentEl = this.querySelector(".content");
-      contentEl.replaceChildren(newContent);
+      contentEl.replaceChildren(...newContent);
     } else {
       console.error("Invalid content type. Must be a string or HTMLElement.");
     }
@@ -57,11 +57,43 @@ class HwWindow extends HTMLElement {
 
     const res = await fetch(src);
     if (!res.ok) {
-      console.error("Failed to load menu:", res.statusText);
+      console.error("Failed to load menu:", res.status);
       return;
     }
+    const json = await res.json();
+    this.setAttribute('title', json.title ?? 'Untitled');
+
+    const icons = document.createElement('hw-icongrid');
+    for(const item of json.items) {
+      const icon = document.createElement('hw-icon');
+      icon.setHTMLUnsafe(html`<a href="${item.href}" target="_blank"><img src="${item.icon}" alt="${item.title}" /><span>${item.title}</span></a>`);
+      icons.append(icon);
+    }
+    console.log(icons);
+    this.replaceContent(icons);
+
   }
 
 }
+
+// Template literal to escape HTML content
+const html = (strings, ...values) =>
+  strings.reduce((out, str, i) => {
+    const value = values[i];
+
+    return out + str + (
+      i < values.length ? escapeHtml(value) : ''
+    );
+  }, '');
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
 
 customElements.define("hw-window", HwWindow);
