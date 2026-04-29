@@ -1,0 +1,12 @@
+{
+  "name": "homelabforworkgroups",
+  "version": "0.0.1",
+  "description": "A fun homelab homepage",
+  "keywords": ["homelab", "self-hosted", "home page"],
+  "main": "index.js",
+  "author": {
+    "name": "Evert Pot",
+    "email": "me@evertpot.com",
+    "url": "https://evertpot.com/"
+  }
+}
