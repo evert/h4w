@@ -147,6 +147,14 @@ hw-window {
       background-size: calc(7px * var(--scale)) calc(10px * var(--scale));
     }
   }
+
+  > .content {
+    flex: 1;
+    display: flex;
+    height: 100%;
+    background: var(--window-background);
+  }
+
 }
 
 

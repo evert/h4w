@@ -9,19 +9,7 @@
     <script async src="js/hw-window.js"></script>
   </head>
   <body>
-    <hw-window class="main-window">
-      <hw-titlebar>
-        <button class="context-menu">Context menu</button>
-        <h1>Homelab for workgroups</h1>
-        <button class="minimize">Minimize</button>
-        <button class="maximize">Maximize</button>
-      </hw-titlebar>
-
-      <menu>
-        <li>File</li>
-        <li>Edit</li>
-      </menu>
-
+    <hw-window class="main-window" title="Homelab for workgroups" src="data/home.json">
       <hw-icongrid>
         <hw-icon>
           <img src="image/icons/homelab/jellyfin.png" alt="Jellyfin" />
@@ -48,7 +36,6 @@
           <span>Deluge</span>
         </hw-icon>
       </hw-icongrid>
-
     </hw-window>
   </body>
 </html>

@@ -1,0 +1,41 @@
+{
+  "title": "Home",
+
+  "items": [
+    {
+      "label": "Jellyfin",
+      "icon": "image/icons/homelab/jellyfin.png",
+      "href": "https://jellyfin.example.com/"
+    },
+
+    {
+      "label": "Seerr",
+      "icon": "image/icons/homelab/seerr.png",
+      "href": "http://seerr.example.com/"
+    },
+
+    {
+      "label": "Home Assistant",
+      "icon": "image/icons/homelab/home-assistant.png",
+      "href": "https://homeassistant.example.com/"
+    },
+
+    {
+      "label": "Sonarr",
+      "icon": "image/icons/homelab/sonarr.png",
+      "href": "http://sonarr.example.com/"
+    },
+
+    {
+      "label": "Radarr",
+      "icon": "image/icons/homelab/radarr.png",
+      "href": "http://radarr.example.com/"
+    },
+
+    {
+      "label": "Deluge",
+      "icon": "image/icons/homelab/deluge.png",
+      "href": "http://deluge.example.com/"
+    }
+  ]
+}
