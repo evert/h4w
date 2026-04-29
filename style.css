@@ -36,6 +36,8 @@ body {
   font-family: 'winsystem', sans-serif;
   font-size: var(--font-size);
   letter-spacing: 1px;
+  margin: 0;
+  padding: 0;
 }
 
 * {
@@ -61,6 +63,10 @@ hw-window {
     background-color: var(--window-background);
   }
 
+  &[maximized] {
+    width: calc(100vw - calc(6px * var(--scale)));
+    height: calc(100vh - calc(6px * var(--scale)));
+  }
 
 
   menu {
@@ -85,57 +91,65 @@ hw-window {
     }
 
   }
-}
-
-hw-titlebar {
-  background: black;
-  color: white;
-  height: var(--bar-height);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--unit-size);
-  padding: 0;
-  h1 {
-    background: var(--window-title);
-    font-weight: normal;
-    height: 100%;
-    padding: var(--unit-size);
-    font-size: var(--font-size);
-    margin:0;
-    text-align: center;
-    flex: 1;
-  }
-
-  button {
+  hw-titlebar {
+    background: black;
+    color: white;
     height: var(--bar-height);
-    width: var(--bar-height);
-    border-style: solid;
-    border-radius: 0;
-    border-color: white #808080 #808080 white;
-    border-width: var(--unit-size) calc(2px * var(--scale)) calc(2px * var(--scale)) var(--unit-size);
-    /* Hide text. Its there just for accessbility */
-    font-size: 0;
-    background-repeat: no-repeat;
-    background-position: center center;
-    image-rendering: pixelated;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--unit-size);
+    padding: 0;
+    h1 {
+      background: var(--window-title);
+      font-weight: normal;
+      height: 100%;
+      padding: var(--unit-size);
+      font-size: var(--font-size);
+      margin:0;
+      text-align: center;
+      flex: 1;
+    }
 
-    &.maximize {
-      background-image: url('image/icons/other/arrow-up.png');
-      background-size: calc(7px * var(--scale)) calc(4px * var(--scale));
-    }
-    &.minimize {
-      background-image: url('image/icons/other/arrow-down.png');
-      background-size: calc(7px * var(--scale)) calc(4px * var(--scale));
-    }
-    &.context-menu {
-      background-image: url('image/icons/other/minus.png');
-      background-size: calc(8px * var(--scale)) calc(4px * var(--scale));
+    button {
+      height: var(--bar-height);
+      width: var(--bar-height);
+      background-color: #c0c0c0;
+      border-style: solid;
+      border-radius: 0;
+      border-color: white #808080 #808080 white;
+      border-width: var(--unit-size) calc(2px * var(--scale)) calc(2px * var(--scale)) var(--unit-size);
+      /* Hide text. Its there just for accessbility */
+      font-size: 0;
+      background-repeat: no-repeat;
+      background-position: center center;
+      image-rendering: pixelated;
+
+      &.maximize {
+        background-image: url('image/icons/other/arrow-up.png');
+        background-size: calc(7px * var(--scale)) calc(4px * var(--scale));
+      }
+      &.minimize {
+        background-image: url('image/icons/other/arrow-down.png');
+        background-size: calc(7px * var(--scale)) calc(4px * var(--scale));
+      }
+      &.context-menu {
+        background-image: url('image/icons/other/minus.png');
+        background-size: calc(8px * var(--scale)) calc(4px * var(--scale));
+      }
+
     }
 
   }
-
+  &[maximized] hw-titlebar {
+    button.maximize {
+      background-image: url('image/icons/other/arrow-up-down.png');
+      background-size: calc(7px * var(--scale)) calc(10px * var(--scale));
+    }
+  }
 }
+
+
 
 hw-icongrid {
   display: flex;
