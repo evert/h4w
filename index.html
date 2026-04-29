@@ -8,7 +8,13 @@
   </head>
   <body>
     <hw-window class="main-window">
-      <h1>Homelab for workgroups</h1>
+      <hw-titlebar>
+        <button class="context-menu">Context menu</button>
+        <h1>Homelab for workgroups</h1>
+        <button class="minimize">Minimize</button>
+        <button class="maximize">Maximize</button>
+      </hw-titlebar>
+
       <menu>
         <li>File</li>
         <li>Edit</li>
@@ -30,6 +36,14 @@
         <hw-icon>
           <img src="image/icons/homelab/sonarr.png" alt="Sonarr" />
           <span>Sonarr</span>
+        </hw-icon>
+        <hw-icon>
+          <img src="image/icons/homelab/radarr.png" alt="Radarr" />
+          <span>Radarr</span>
+        </hw-icon>
+        <hw-icon>
+          <img src="image/icons/homelab/deluge.png" alt="Deluge" />
+          <span>Deluge</span>
         </hw-icon>
       </hw-icongrid>
 

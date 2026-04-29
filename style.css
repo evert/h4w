@@ -61,26 +61,17 @@ hw-window {
     background-color: var(--window-background);
   }
 
-  h1 {
-    background: var(--window-title);
-    font-weight: normal;
-    font-size: var(--font-size);
-    color: white;
-    height: var(--bar-height);
-    margin:0;
-    text-align: center;
-    padding: var(--unit-size);
-  }
+
 
   menu {
     margin: 0;
     height: var(--bar-height);
     display: flex;
     padding-left: calc(8px * var(--scale));
-    gap: calc(8px * var(--scale));
+    gap: calc(4px * var(--scale));
     li {
       list-style: none;
-      padding: 0;
+      padding: 0 calc(4px * var(--scale));
       margin: 0;
       display: flex;
       align-items: center;
@@ -94,8 +85,55 @@ hw-window {
     }
 
   }
+}
 
+hw-titlebar {
+  background: black;
+  color: white;
+  height: var(--bar-height);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--unit-size);
+  padding: 0;
+  h1 {
+    background: var(--window-title);
+    font-weight: normal;
+    height: 100%;
+    padding: var(--unit-size);
+    font-size: var(--font-size);
+    margin:0;
+    text-align: center;
+    flex: 1;
+  }
 
+  button {
+    height: var(--bar-height);
+    width: var(--bar-height);
+    border-style: solid;
+    border-radius: 0;
+    border-color: white #808080 #808080 white;
+    border-width: var(--unit-size) calc(2px * var(--scale)) calc(2px * var(--scale)) var(--unit-size);
+    /* Hide text. Its there just for accessbility */
+    font-size: 0;
+    background-repeat: no-repeat;
+    background-position: center center;
+    image-rendering: pixelated;
+
+    &.maximize {
+      background-image: url('image/icons/other/arrow-up.png');
+      background-size: calc(7px * var(--scale)) calc(4px * var(--scale));
+    }
+    &.minimize {
+      background-image: url('image/icons/other/arrow-down.png');
+      background-size: calc(7px * var(--scale)) calc(4px * var(--scale));
+    }
+    &.context-menu {
+      background-image: url('image/icons/other/minus.png');
+      background-size: calc(8px * var(--scale)) calc(4px * var(--scale));
+    }
+
+  }
 
 }
 
