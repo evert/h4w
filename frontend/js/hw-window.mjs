@@ -1,5 +1,6 @@
 // @ts-check no-strict
 import { draggable } from "./draggable.mjs";
+import { menu } from "./menu.mjs";
 
 class HwWindow extends HTMLElement {
 
@@ -21,8 +22,20 @@ class HwWindow extends HTMLElement {
       </hw-titlebar>
 
       <menu>
-        <li>File</li>
-        <li>Edit</li>
+        <li>File
+           <menu>
+              <li>This is just here for</li>
+              <li>aesthetic purposes</li>
+           </menu>
+        </li>
+        <li>Edit
+            <menu>
+              <li>Cut</li>
+              <li>Copy</li>
+              <li>Paste</li>
+              <li>(none of these work)</li>
+            </menu>
+        </li>
         <li><hw-open src="/menu/credits.json">About</hw-open></li>
       </menu>
       <div class="content">
@@ -40,6 +53,11 @@ class HwWindow extends HTMLElement {
     if (this.hasAttribute('src')) {
       this.loadMenu(this.getAttribute('src'));
     }
+
+    for(const m of this.querySelectorAll('&> menu li')) {
+      menu(/** @type {HTMLLIElement} */(m))
+    }
+
     draggable(this.querySelector('hw-titlebar h1'), this);
 
   }
@@ -89,9 +107,14 @@ class HwWindow extends HTMLElement {
    * @param {string} newValue
    */
   attributeChangedCallback(name, _oldValue, newValue) {
+
+    // Too early
+    if (!this.isConnected) return;
     switch (name) {
       case "title":
-        this.querySelector('hw-titlebar h1').textContent = newValue;
+        const h1 = this.querySelector('hw-titlebar h1');
+        if (!h1) return;
+        h1.textContent = newValue;
         break;
     }
   }

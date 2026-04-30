@@ -72,13 +72,13 @@ hw-window {
   }
 
 
-  menu {
+  > menu {
     margin: 0;
     height: var(--bar-height);
     display: flex;
     padding-left: calc(8px * var(--scale));
     gap: calc(4px * var(--scale));
-    li {
+    > li {
       list-style: none;
       padding: 0 calc(4px * var(--scale));
       margin: 0;
@@ -91,7 +91,26 @@ hw-window {
         background-color: var(--window-title);
         color: white;
       }
+
+      > menu {
+        display: none;
+        position: absolute;
+
+        color: black;
+
+        flex-direction: column;
+        border: var(--unit-size) solid black;
+        background-color: var(--window-background);
+
+        li {
+          list-style: none;
+        }
+        &[open] {
+          display: flex;
+        }
+      }
     }
+
 
   }
   hw-titlebar {
