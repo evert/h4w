@@ -2,12 +2,14 @@
   "compilerOptions": {
 
     "noEmit": true,
-
-    "allowJs": true,
+    "allowImportingTsExtensions": true,
 
     "module": "nodenext",
     "target": "esnext",
     "types": ["node"],
+    "paths": {
+      "mdns-listener-advanced": ["./node_modules/mdns-listener-advanced/dist/src/index.d.ts"]
+    },
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,

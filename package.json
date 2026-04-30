@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.0.0",
-    "hono": "^4.12.15"
+    "hono": "^4.12.15",
+    "mdns-listener-advanced": "^3.4.11"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",

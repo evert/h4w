@@ -4,10 +4,12 @@ import { serve } from '@hono/node-server';
 import { serveStatic } from '@hono/node-server/serve-static';
 import fs from 'fs/promises';
 import { HTTPException } from 'hono/http-exception';
+import { neighbourhood } from './server/mdns.ts';
 
 const app = new Hono();
 
 app.use(logger());
+app.route('/', neighbourhood);
 
 app.use('/*', serveStatic({ root: './frontend' }));
 app.get('/menu/:name', async (c) => {

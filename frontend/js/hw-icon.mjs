@@ -15,7 +15,6 @@ class HwIcon extends HTMLElement {
       window.open(anchor.href, anchor.target || "_blank");
     });
 
-
   }
 
 }
