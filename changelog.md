@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.0.3 (????-??-??)
+0.0.3 (2026-04-30)
 ------------------
 
 * Multiple window support, and windows can be dragged!

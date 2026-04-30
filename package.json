@@ -1,6 +1,6 @@
 {
   "name": "hl4wg",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A fun homelab homepage",
   "type": "module",
   "main": "./index.ts",
