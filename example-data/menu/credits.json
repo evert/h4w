@@ -1,0 +1,23 @@
+{
+  "title": "Credits",
+
+  "items": [
+    {
+      "title": "Github page",
+      "icon": "image/icons/win311/NOTEP001.PNG",
+      "href": "https://github.com/evert/hl4wg/"
+    },
+
+    {
+      "title": "NPM package",
+      "icon": "image/icons/win311/PACKA001.PNG",
+      "href": "https://www.npmjs.com/package/hl4wg"
+    },
+
+    {
+      "title": "My website",
+      "icon": "image/icons/win311/SOUND001.PNG",
+      "href": "https://home.cluster.evertpot.com/"
+    }
+  ]
+}

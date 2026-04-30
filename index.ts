@@ -29,7 +29,7 @@ app.get('/menu/:name', async (c) => {
 
 });
 
-const port = Number(process.env.PORT ?? 3111);
+const port = Number(process.env['PORT'] ?? 3111);
 
 console.log(`Server listening on http://localhost:${port}\n`);
 

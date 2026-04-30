@@ -1,6 +1,9 @@
+// @ts-check no-strict
+import { draggable } from "./draggable.mjs";
+
 class HwWindow extends HTMLElement {
 
-  static observedAttributes = ["maximized"];
+  static observedAttributes = ["title"];
 
   constructor() {
     super();
@@ -20,13 +23,13 @@ class HwWindow extends HTMLElement {
       <menu>
         <li>File</li>
         <li>Edit</li>
+        <li><hw-open src="/menu/credits.json">About</hw-open></li>
       </menu>
       <div class="content">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.</p>
       </div>
     `);
 
-    this.replaceContent(...children);
     this.querySelector('div').replaceChildren(...children);
     this.querySelector('hw-titlebar h1').textContent = this.getAttribute("title") ?? "Unitled";
 
@@ -37,13 +40,17 @@ class HwWindow extends HTMLElement {
     if (this.hasAttribute('src')) {
       this.loadMenu(this.getAttribute('src'));
     }
+    draggable(this.querySelector('hw-titlebar h1'), this);
 
   }
 
+  /**
+   * @param  {string[]|Element[]} newContent
+   */
   async replaceContent(...newContent) {
 
     if (typeof newContent[0] === "string") {
-      this.querySelector(".content").innerHTML = newContent;
+      this.querySelector(".content").innerHTML = newContent[0];
     } else if (newContent[0] instanceof HTMLElement) {
       const contentEl = this.querySelector(".content");
       contentEl.replaceChildren(...newContent);
@@ -53,6 +60,9 @@ class HwWindow extends HTMLElement {
 
   }
 
+  /**
+   * @param {string} src
+   */
   async loadMenu(src) {
 
     const res = await fetch(src);
@@ -69,14 +79,33 @@ class HwWindow extends HTMLElement {
       icon.setHTMLUnsafe(html`<a href="${item.href}" target="_blank"><img src="${item.icon}" alt="${item.title}" /><span>${item.title}</span></a>`);
       icons.append(icon);
     }
-    console.log(icons);
     this.replaceContent(icons);
 
   }
 
+  /**
+   * @param {string} name
+   * @param {string} _oldValue
+   * @param {string} newValue
+   */
+  attributeChangedCallback(name, _oldValue, newValue) {
+    switch (name) {
+      case "title":
+        this.querySelector('hw-titlebar h1').textContent = newValue;
+        break;
+    }
+  }
+
 }
 
-// Template literal to escape HTML content
+
+/**
+ * Template literal to escape HTML content
+ *
+ * @param {TemplateStringsArray} strings
+ * @param  {...any} values
+ * @returns {string}
+ */
 const html = (strings, ...values) =>
   strings.reduce((out, str, i) => {
     const value = values[i];
@@ -86,6 +115,9 @@ const html = (strings, ...values) =>
     );
   }, '');
 
+/**
+ * @param {string} value
+ */
 function escapeHtml(value) {
   return String(value)
     .replaceAll('&', '&amp;')

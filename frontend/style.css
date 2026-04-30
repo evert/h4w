@@ -48,6 +48,7 @@ body {
 }
 
 hw-window {
+
   display:block;
   border: 2px solid black;              /* inner black */
   box-shadow:
@@ -57,7 +58,9 @@ hw-window {
   display: flex;
   flex-direction: column;
   background: black;
+  position: absolute;
   gap: var(--unit-size);
+  cursor: pointer;
 
   > * {
     background-color: var(--window-background);
@@ -194,6 +197,15 @@ hw-icongrid {
       text-align: center;
     }
 
+  }
+}
+
+hw-open {
+  button {
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
   }
 }
 

@@ -10,7 +10,7 @@ windows era.
 Screenshot
 -----------
 
-<img src="/screenshots/v0.0.2.png" alt="Screenshot of the homepage" />
+<img src="https://raw.githubusercontent.com/evert/hl4wg/refs/heads/main/screenshots/v0.0.3.png" alt="Screenshot of the homepage" />
 
 Getting started
 ----------------
@@ -28,7 +28,7 @@ cd hl4wg
 npm install
 
 # Copy example config
-cp -R example-data/ data/
+cp -R example-data/* data/
 
 # Run
 npm start

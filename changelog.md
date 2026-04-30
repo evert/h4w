@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.0.3 (????-??-??)
+------------------
+
+* Multiple window support, and windows can be dragged!
+* Added credits menu.
+* Title from menu file is respected.
+* Type checking with typescript
+
+
 0.0.2 (2026-04-29)
 ------------------
 
