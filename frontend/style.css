@@ -71,6 +71,7 @@ hw-window {
     height: calc(100vh - calc(6px * var(--scale)));
   }
 
+  max-width: calc(400px * var(--scale));
 
   menu {
     margin: 0;
