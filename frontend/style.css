@@ -145,6 +145,7 @@ hw-window {
       &.context-menu {
         background-image: url('image/icons/other/minus.png');
         background-size: calc(8px * var(--scale)) calc(4px * var(--scale));
+        border: none;
       }
 
     }
