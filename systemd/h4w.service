@@ -1,0 +1,25 @@
+[Unit]
+Description=Burrow Proxy
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=h4w
+Group=h4w
+WorkingDirectory=/opt/h4w
+Environment="PORT=3111"
+ExecStart=/usr/bin/node /opt/h4w/index.ts
+
+Restart=awlays
+RestartSec=10
+
+NoNewPrivileges=true
+PrivateTmp=true
+
+StandardOutput=journal
+StandardError=journal
+
+TimeoutStopSec=60
+KillSignal=SIGINT
+
