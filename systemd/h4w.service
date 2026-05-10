@@ -1,5 +1,5 @@
 [Unit]
-Description=Burrow Proxy
+Description=Homelab for Workgroups
 Wants=network-online.target
 After=network-online.target
 
