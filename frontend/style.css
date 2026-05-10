@@ -66,9 +66,13 @@ hw-window {
     background-color: var(--window-background);
   }
 
+  /* Cap width at ~5 icons across: 5 × icon width + icongrid padding + border */
+  max-width: calc(5 * 64px * var(--scale) + 16px * var(--scale) + 4px);
+
   &[maximized] {
     width: calc(100vw - calc(6px * var(--scale)));
     height: calc(100vh - calc(6px * var(--scale)));
+    max-width: none;
   }
 
   max-width: calc(400px * var(--scale));
@@ -105,7 +109,8 @@ hw-window {
     gap: var(--unit-size);
     padding: 0;
     h1 {
-      background: var(--window-title);
+      background: var(--window-background);
+      color: black;
       font-weight: normal;
       height: 100%;
       padding: var(--unit-size);
@@ -145,6 +150,11 @@ hw-window {
     }
 
   }
+  &[active] hw-titlebar h1 {
+    background: var(--window-title);
+    color: white;
+  }
+
   &[maximized] hw-titlebar {
     button.maximize {
       background-image: url('image/icons/other/arrow-up-down.png');
@@ -163,42 +173,44 @@ hw-window {
 
 
 
+hw-icon {
+  a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(64px * var(--scale));
+    gap: calc(4px * var(--scale));
+  }
+  a:focus span {
+    background-color: var(--window-title);
+    color: white;
+  }
+  img {
+    width: calc(32px * var(--scale));
+    height: calc(32px * var(--scale));
+    image-rendering: pixelated;
+  }
+  span {
+    padding: var(--unit-size);
+    font-size: var(--font-size-sm);
+    font-family: 'ms-sans-serif', sans-serif;
+    text-align: center;
+  }
+}
+
 hw-icongrid {
   display: flex;
   flex-wrap: wrap;
   padding: calc(8px * var(--scale));
-
   flex: 1;
+}
 
-  hw-icon {
-
-    a {
-      text-decoration: none;
-      color: black;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: calc(64px * var(--scale));
-      gap: calc(4px * var(--scale));
-    }
-    a:focus span {
-      background-color: var(--window-title);
-      color: white;
-    }
-    img {
-      width: calc(32px * var(--scale));
-      height: calc(32px * var(--scale));
-      image-rendering: pixelated;
-    }
-
-    span {
-      padding: var(--unit-size);
-      font-size: var(--font-size-sm);
-      font-family: 'ms-sans-serif', sans-serif;
-      text-align: center;
-    }
-
-  }
+hw-iconlist {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  gap: calc(8px * var(--scale));
 }
 
 hw-open {
@@ -213,4 +225,10 @@ hw-open {
 .main-window {
   min-width: calc(300px * var(--scale));
   min-height: calc(200px * var(--scale));
+}
+
+.desktop-icons {
+  position: fixed;
+  bottom: calc(8px * var(--scale));
+  left: calc(8px * var(--scale));
 }

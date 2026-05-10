@@ -8,8 +8,10 @@
     "target": "esnext",
     "types": ["node"],
     "paths": {
+      // Fix for broken types
       "mdns-listener-advanced": ["./node_modules/mdns-listener-advanced/dist/src/index.d.ts"]
     },
+    "allowImportingTsExtensions": true,
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
