@@ -76,7 +76,13 @@ class HwWindow extends HTMLElement {
     const icons = document.createElement('hw-icongrid');
     for(const item of json.items) {
       const icon = document.createElement('hw-icon');
-      icon.setHTMLUnsafe(html`<a href="${item.href}" target="_blank"><img src="${item.icon}" alt="${item.title}" /><span>${item.title}</span></a>`);
+      const iconSrc = resolveIconSrc(item.icon, item.title);
+      icon.setHTMLUnsafe(html`<a href="${item.href}" target="_blank"><img src="${iconSrc}" alt="${item.title}" /><span>${item.title}</span></a>`);
+      const img = icon.querySelector('img');
+      img.addEventListener('error', () => {
+        if (img.src.endsWith(FALLBACK_ICON)) return;
+        img.src = FALLBACK_ICON;
+      });
       icons.append(icon);
     }
     this.replaceContent(icons);
@@ -127,5 +133,26 @@ function escapeHtml(value) {
     .replaceAll("'", '&#39;');
 }
 
+
+const FALLBACK_ICON = '/image/icons/win311/WINHE001.PNG';
+
+/**
+ * @param {string|undefined} icon
+ * @param {string} title
+ * @returns {string}
+ */
+function resolveIconSrc(icon, title) {
+  if (!icon) {
+    const slug = String(title ?? '').toLowerCase().replace(/\s+/g, '-');
+    return `/image/icons/homelab/${slug}.png`;
+  }
+  if (!icon.includes('/')) {
+    return `/image/icons/homelab/${icon}`;
+  }
+  if (!icon.startsWith('/')) {
+    return `/${icon}`;
+  }
+  return icon;
+}
 
 customElements.define("hw-window", HwWindow);
