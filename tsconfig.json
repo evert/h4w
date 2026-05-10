@@ -8,6 +8,7 @@
     "module": "nodenext",
     "target": "esnext",
     "types": ["node"],
+    "allowImportingTsExtensions": true,
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,

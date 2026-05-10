@@ -5,7 +5,7 @@ import { serveStatic } from '@hono/node-server/serve-static';
 import fs from 'fs/promises';
 import path from 'path';
 import { HTTPException } from 'hono/http-exception';
-import { firstStart } from './first-start.js';
+import { firstStart } from './first-start.ts';
 
 firstStart();
 
