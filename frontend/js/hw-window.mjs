@@ -143,9 +143,11 @@ class HwWindow extends HTMLElement {
    */
   attributeChangedCallback(name, _oldValue, newValue) {
     switch (name) {
-      case "title":
-        this.querySelector('hw-titlebar h1').textContent = newValue;
+      case "title": {
+        const h1 = this.querySelector('hw-titlebar h1');
+        if (h1) h1.textContent = newValue;
         break;
+      }
     }
   }
 
