@@ -66,9 +66,13 @@ hw-window {
     background-color: var(--window-background);
   }
 
+  /* Cap width at ~5 icons across: 5 × icon width + icongrid padding + border */
+  max-width: calc(5 * 64px * var(--scale) + 16px * var(--scale) + 4px);
+
   &[maximized] {
     width: calc(100vw - calc(6px * var(--scale)));
     height: calc(100vh - calc(6px * var(--scale)));
+    max-width: none;
   }
 
 
