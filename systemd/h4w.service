@@ -9,7 +9,7 @@ User=h4w
 Group=h4w
 WorkingDirectory=/opt/h4w
 Environment="PORT=3111"
-ExecStart=/usr/bin/node /opt/h4w/index.ts
+ExecStart=/usr/bin/node /opt/h4w/server/index.ts
 
 Restart=always
 RestartSec=10
