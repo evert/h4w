@@ -9,7 +9,11 @@ export function firstStart() {
   fs.mkdirSync(dataDir, { recursive: true });
 
   const entries = fs.readdirSync(dataDir);
-  if (entries.length > 0) {
+  for(const entry of entries) {
+    if (entry === '.gitkeep' || entry === '.gitignore') {
+      continue;
+    }
+    // Skip seed
     return;
   }
 
