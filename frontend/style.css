@@ -197,6 +197,13 @@ hw-icon {
     font-size: var(--font-size-sm);
     font-family: 'ms-sans-serif', sans-serif;
     text-align: center;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 }
 
@@ -231,4 +238,5 @@ hw-open {
   position: fixed;
   bottom: calc(8px * var(--scale));
   left: calc(8px * var(--scale));
+
 }

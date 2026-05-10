@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import Core, { EmittedEvent, type Device } from 'mdns-listener-advanced';
+import type { Menu, MdnsIcon } from './types.ts';
 
 function iconForDevice(services: string[]): string {
   if (services.includes('_smb._tcp')) return 'image/icons/win311/WINFI001.PNG';
@@ -13,23 +14,19 @@ const instanceToTarget = new Map<string, string>();
 // all service instance names seen via PTR records
 const ptrInstances = new Set<string>();
 
-function stripDot(name: string): string {
-  return name.replace(/\.$/, '');
-}
-
 const mdns = new Core(null, null, { disablePublisher: true });
 const event = mdns.listen();
 
 event.on(EmittedEvent.DISCOVERY, (device: Device) => {
-  const name = stripDot(device.name);
+  const name = device.name;
 
   if (device.type === 'A' && typeof device.data === 'string') {
     hostToIp.set(name, device.data);
   } else if (device.type === 'SRV') {
     const target = (device.data as { target?: string }).target;
-    if (target) instanceToTarget.set(name, stripDot(target));
+    if (target) instanceToTarget.set(name, target);
   } else if (device.type === 'PTR' && typeof device.data === 'string') {
-    ptrInstances.add(stripDot(device.data));
+    ptrInstances.add(device.data);
   }
 });
 
@@ -39,6 +36,79 @@ event.on(EmittedEvent.ERROR, (err: Error) => {
 
 mdns.scan();
 setInterval(() => mdns.scan(), 30_000);
+
+
+export const neighbourhood = new Hono();
+
+function extractServiceType(instance: string): string | null {
+  const m = instance.replace(/\.local\.?$/, '').match(/\.(_[^.]+\._(tcp|udp))$/);
+  return m ? m[1]! : null;
+}
+
+neighbourhood.get('/neighbourhood', (c) => {
+
+
+  // Primary: group by IPv4 (definitive identity)
+  const byIp = new Map<string, Group>();
+  // Fallback: group by normalized name for devices with no A record yet
+  const byKey = new Map<string, Group>();
+
+  // Seed IP groups from A records so hostname-only devices appear too.
+  // Only add the hostname to names if it's a usable display name (not hex/UUID).
+  for (const [host, ip] of hostToIp) {
+    if (!byIp.has(ip)) {
+      const shortName = host.replace(/\.local\.?$/, '');
+      const displayName = extractDeviceName(shortName);
+      byIp.set(ip, { hostname: shortName, ip, names: displayName ? [displayName] : [], services: [] });
+    }
+  }
+
+  // Merge service instances into IP groups, or fall back to key groups.
+  for (const instance of ptrInstances) {
+    const displayName = extractDeviceName(instance);
+    if (!displayName) continue;
+
+    const target = instanceToTarget.get(instance);
+    const ip = target ? hostToIp.get(target) : undefined;
+    const svc = extractServiceType(instance);
+
+    if (ip) {
+      const g = byIp.get(ip)!;
+      if (!g.names.includes(displayName)) g.names.push(displayName);
+      if (!g.hostname && target) g.hostname = target.replace(/\.local\.?$/, '');
+      if (svc && !g.services.includes(svc)) g.services.push(svc);
+    } else {
+      // IP not yet seen — group by normalized name as best effort.
+      const key = normalizeKey(displayName);
+      if (!byKey.has(key)) byKey.set(key, { hostname: null, ip: null, names: [], services: [] });
+      const g = byKey.get(key)!;
+      if (!g.names.includes(displayName)) g.names.push(displayName);
+      if (!g.hostname && target) g.hostname = target.replace(/\.local\.?$/, '');
+      if (svc && !g.services.includes(svc)) g.services.push(svc);
+    }
+  }
+
+  const items: MdnsIcon[] = [];
+  const usedHostnames = new Set<string>();
+
+  for (const group of byIp.values()) {
+
+    const item = groupToIcon(group);
+    if (item) {
+      items.push(item);
+      usedHostnames.add(item.hostname);
+    }
+
+  }
+  for (const group of byKey.values()) {
+    const item = groupToIcon(group);
+    // Skip byKey entries whose hostname is already covered by a byIp group.
+    if (item && !usedHostnames.has(item.hostname)) items.push(item);
+  }
+
+  const result: Menu = { title: 'Network Neighbourhood', items };
+  return c.json(result);
+});
 
 // Extracts a human-readable display name from an mDNS instance name, or null to discard.
 function extractDeviceName(raw: string): string | null {
@@ -89,78 +159,12 @@ function normalizeKey(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
-export const neighbourhood = new Hono();
 
-function extractServiceType(instance: string): string | null {
-  const m = instance.replace(/\.local\.?$/, '').match(/\.(_[^.]+\._(tcp|udp))$/);
-  return m ? m[1]! : null;
+type Group = { hostname: string | null; ip: string | null; names: string[]; services: string[] };
+
+function groupToIcon({ hostname, ip, names, services }: Group): MdnsIcon | null {
+  if (names.length === 0) return null;
+  const title = names.reduce((best, n) => nameScore(n) >= nameScore(best) ? n : best, names[0]!);
+  const host = hostname ?? toHostname(title);
+  return { title, icon: iconForDevice(services), href: `http://${host}.local`, hostname: host, ip, services };
 }
-
-neighbourhood.get('/neighbourhood', (c) => {
-  type Group = { hostname: string | null; ip: string | null; names: string[]; services: string[] };
-  // Primary: group by IPv4 (definitive identity)
-  const byIp = new Map<string, Group>();
-  // Fallback: group by normalized name for devices with no A record yet
-  const byKey = new Map<string, Group>();
-
-  // Seed IP groups from A records so hostname-only devices appear too.
-  // Only add the hostname to names if it's a usable display name (not hex/UUID).
-  for (const [host, ip] of hostToIp) {
-    if (!byIp.has(ip)) {
-      const shortName = host.replace(/\.local\.?$/, '');
-      const displayName = extractDeviceName(shortName);
-      byIp.set(ip, { hostname: shortName, ip, names: displayName ? [displayName] : [], services: [] });
-    }
-  }
-
-  // Merge service instances into IP groups, or fall back to key groups.
-  for (const instance of ptrInstances) {
-    const displayName = extractDeviceName(instance);
-    if (!displayName) continue;
-
-    const target = instanceToTarget.get(instance);
-    const ip = target ? hostToIp.get(target) : undefined;
-    const svc = extractServiceType(instance);
-
-    if (ip) {
-      const g = byIp.get(ip)!;
-      if (!g.names.includes(displayName)) g.names.push(displayName);
-      if (!g.hostname && target) g.hostname = target.replace(/\.local\.?$/, '');
-      if (svc && !g.services.includes(svc)) g.services.push(svc);
-    } else {
-      // IP not yet seen — group by normalized name as best effort.
-      const key = normalizeKey(displayName);
-      if (!byKey.has(key)) byKey.set(key, { hostname: null, ip: null, names: [], services: [] });
-      const g = byKey.get(key)!;
-      if (!g.names.includes(displayName)) g.names.push(displayName);
-      if (!g.hostname && target) g.hostname = target.replace(/\.local\.?$/, '');
-      if (svc && !g.services.includes(svc)) g.services.push(svc);
-    }
-  }
-
-  const items: Array<{ title: string; icon: string; href: string; hostname: string; ip: string | null; services: string[] }> = [];
-
-  function makeItem({ hostname, ip, names, services }: Group) {
-    if (names.length === 0) return null;
-    const title = names.reduce((best, n) => nameScore(n) >= nameScore(best) ? n : best, names[0]!);
-    const host = hostname ?? toHostname(title);
-    return { title, icon: iconForDevice(services), href: `http://${host}.local`, hostname: host, ip, services };
-  }
-
-  const usedHostnames = new Set<string>();
-
-  for (const group of byIp.values()) {
-    const item = makeItem(group);
-    if (item) {
-      usedHostnames.add(item.hostname);
-      items.push(item);
-    }
-  }
-  // Skip byKey entries whose hostname is already covered by a byIp group.
-  for (const group of byKey.values()) {
-    const item = makeItem(group);
-    if (item && !usedHostnames.has(item.hostname)) items.push(item);
-  }
-
-  return c.json({ title: 'Network Neighbourhood', items });
-});
