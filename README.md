@@ -12,6 +12,9 @@ Screenshot
 
 <img src="https://raw.githubusercontent.com/evert/hl4wg/refs/heads/main/screenshots/v0.1.0.png" alt="Screenshot of the homepage" />
 
+Note: this screenshot has a network neighbourhood, which is unreleased because I don't know yet
+what to do with the icons.
+
 Getting started
 ----------------
 
