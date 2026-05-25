@@ -8,6 +8,11 @@
     },
 
     {
+      "title": "Immich",
+      "href": "https://immich.example.com/"
+    },
+
+    {
       "title": "Seerr",
       "href": "http://seerr.example.com/"
     },
