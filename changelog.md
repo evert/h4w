@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.1.0 (????-??-??)
+------------------
+
+* Some more docs in the README.
+* Minimizing works!
+* Include a systemd example unit file.
+
+
 0.0.3 (2026-04-30)
 ------------------
 

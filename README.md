@@ -27,17 +27,49 @@ cd hl4wg
 # Install dependencies
 npm install
 
-# Copy example config
-cp -R example-data/* data/
-
 # Run
 npm start
 ```
 
-
 ### docker-compose
 
 TODO
+
+Changing icons, adding menu items, etc
+--------------------------------------
+
+This tool will by default load in the 'menu.json' file in the `data/` directory.
+
+This is a menu file, that roughly has this structure:
+
+```json
+{
+  "title": "Homelab for Workgroups",
+
+  "items": [
+    {
+      "title": "Jellyfin",
+      "icon": "/image/icons/homelab/jellyfin.png",
+      "href": "https://jellyfin.example.com/"
+    }
+
+}
+```
+
+Take a look at the supplied icons on Github in the `frontend/image/icons` directory. You
+can add your own icons, host them anywhere including on this service.
+
+Providing an `icon` is optional. If it's omitted we will try to lowercase the title and
+see if an icon with that name exists in `frontend/image/icons/homelab/[name.png]`.
+
+
+Can you implement x / x doesn't work
+------------------------------------
+
+If something doesn't work or seems missing it's probably because I didn't build it!
+A bunch of features are non-funtional and just decorative for now.
+
+I'd _love_ to know what people would like to see, so please just [open issues](https://github.com/evert/h4w/issues/new) to request features or contribute using a pull request!
 
 
 Credits
