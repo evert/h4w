@@ -74,6 +74,14 @@ A bunch of features are non-funtional and just decorative for now.
 
 I'd _love_ to know what people would like to see, so please just [open issues](https://github.com/evert/h4w/issues/new) to request features or contribute using a pull request!
 
+## Requesting icons
+
+I just added the icons for things I use, but I'm happy to add more. I have a crappy
+script that takes an existing icon and makes it look worse. Just open an issue with
+what you need!
+
+New hand-made icons are also very welcome. My script just re-uses existing icons.
+
 
 Credits
 -------
