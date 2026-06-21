@@ -84,7 +84,7 @@ class HwWindow extends HTMLElement {
     }
 
     const icon = document.createElement('hw-icon');
-    icon.setAttribute('is-menu', '');
+    icon.setAttribute('type', 'group');
     icon.setAttribute('href', src);
     icon.setAttribute('title', this.getAttribute('title') ?? 'Untitled');
     icon.setAttribute('icon', this.icon ?? GROUP_ICON);
@@ -130,6 +130,7 @@ class HwWindow extends HTMLElement {
       icon.setAttribute('href', item.href);
       icon.setAttribute('title', item.title);
       if (item.icon) icon.setAttribute('icon', item.icon);
+      if (item.type) icon.setAttribute('type', item.type);
       icons.append(icon);
     }
     this.replaceContent(icons);

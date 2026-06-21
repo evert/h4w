@@ -70,6 +70,31 @@ pixelated.
 Providing an `icon` is optional. If it's omitted we will try to lowercase the title and
 see if an icon with that name exists in `frontend/image/icons/homelab/[name.png]`.
 
+Adding more groups / menus 
+--------------------------
+
+You can create additional menus by making more `.json` files in the `data/` directory.
+
+To open them from the main menu, add `type: "group"` to an icon:
+
+
+```json
+{
+  "title": "Menu,
+
+  "items": [
+    {
+      "title": "Sub menu",
+      "icon": "/image/icons/win311/PROGM004.PNG",
+      "href": "https://jellyfin.example.com/"
+    }
+
+}
+```
+
+Note that these `.json` files can come from anywhere, including other servers (if CORS headers are set up correctly). This could
+allow you to generate menus dynamically using your own code.
+
 
 Can you implement x / x doesn't work
 ------------------------------------

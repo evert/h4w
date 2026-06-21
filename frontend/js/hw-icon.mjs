@@ -33,7 +33,13 @@ class HwIcon extends HTMLElement {
     });
     anchor.addEventListener("dblclick", (e) => {
       e.preventDefault();
-      if (this.hasAttribute('is-menu')) {
+      if (this.getAttribute('type') === 'group') {
+        // Find existing window with the same src.
+        const existing = document.querySelector('hw-window[src="' + href + '"]');
+        if (existing) {
+          // Do nothing.
+          return;
+        }
         const win = document.createElement('hw-window');
         win.setAttribute('src', href);
         document.body.appendChild(win);
