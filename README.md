@@ -60,7 +60,12 @@ This is a menu file, that roughly has this structure:
 ```
 
 Take a look at the supplied icons on Github in the `frontend/image/icons` directory. You
-can add your own icons, host them anywhere including on this service.
+can add your own icons, host them anywhere. A good place is simply in your `/data` directory
+and then reference them as `/data/your_folder/your_icon.png` in the `icon` field.
+
+To make icons look era appropriate, I recommend at least resizing to 32x32, reducing
+color depth to 8bit (256 colors) and disable all anti-aliasing to make them look extra
+pixelated.
 
 Providing an `icon` is optional. If it's omitted we will try to lowercase the title and
 see if an icon with that name exists in `frontend/image/icons/homelab/[name.png]`.
