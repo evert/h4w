@@ -80,7 +80,7 @@ To open them from the main menu, add `type: "group"` to an icon:
 
 ```json
 {
-  "title": "Menu,
+  "title": "Menu",
 
   "items": [
     {
