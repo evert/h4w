@@ -88,6 +88,7 @@ To open them from the main menu, add `type: "group"` to an icon:
       "icon": "/image/icons/win311/PROGM004.PNG",
       "href": "https://jellyfin.example.com/"
     }
+  ]
 
 }
 ```
