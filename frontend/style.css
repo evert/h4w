@@ -47,7 +47,7 @@ body {
 
 }
 
-:is(hw-window, hw-group) {
+:is(hw-window, hw-group, hw-iframe) {
 
   display:block;
   border: 2px solid black;              /* inner black */
@@ -219,6 +219,18 @@ hw-open {
     background: transparent;
     font-family: inherit;
     font-size: inherit;
+  }
+}
+
+hw-iframe {
+  max-width: none;
+  width: calc(640px * var(--scale));
+  height: calc(480px * var(--scale));
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 }
 

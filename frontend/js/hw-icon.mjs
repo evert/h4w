@@ -34,14 +34,19 @@ class HwIcon extends HTMLElement {
     anchor.addEventListener("dblclick", (e) => {
       e.preventDefault();
       if (this.getAttribute('type') === 'group') {
-        // Find existing window with the same src.
         const existing = document.querySelector('hw-group[src="' + href + '"]');
-        if (existing) {
-          // Do nothing.
-          return;
-        }
+        if (existing) return;
         const win = document.createElement('hw-group');
         win.setAttribute('src', href);
+        document.body.appendChild(win);
+        return;
+      }
+      if (this.getAttribute('type') === 'iframe') {
+        const existing = document.querySelector('hw-iframe[src="' + href + '"]');
+        if (existing) return;
+        const win = document.createElement('hw-iframe');
+        win.setAttribute('src', href);
+        win.setAttribute('title', title);
         document.body.appendChild(win);
         return;
       }

@@ -4,9 +4,18 @@ import { draggable } from "./draggable.mjs";
 export class HwWindow extends HTMLElement {
 
   static observedAttributes = ["title"];
+  /** @type {string} */
+  icon = '/image/icons/win311/PROGM003.PNG';
 
   constructor() {
     super();
+    if (this.hasAttribute('src')) {
+      const src = this.getAttribute('src');
+      const existingIcon = document.querySelector(`.desktop-icons hw-icon a[href="${src}"]`);
+      if (existingIcon) {
+        existingIcon.closest('hw-icon').remove();
+      }
+    }
   }
 
   connectedCallback() {
@@ -52,7 +61,7 @@ export class HwWindow extends HTMLElement {
 
   activate() {
 
-    for (const win of document.querySelectorAll('hw-window[active], hw-group[active]')) {
+    for (const win of document.querySelectorAll('hw-window[active], hw-group[active], hw-iframe[active]')) {
       if (win !== this) win.removeAttribute('active');
     }
     this.setAttribute('active', '');
@@ -62,6 +71,25 @@ export class HwWindow extends HTMLElement {
   }
 
   minimize() {
+    const src = this.getAttribute('src');
+    if (!src) {
+      this.remove();
+      return;
+    }
+
+    const desktop = document.querySelector('.desktop-icons');
+    if (!desktop) {
+      console.error('No .desktop-icons container found');
+      return;
+    }
+
+    const icon = document.createElement('hw-icon');
+    icon.setAttribute('type', 'group');
+    icon.setAttribute('href', src);
+    icon.setAttribute('title', this.getAttribute('title') ?? 'Untitled');
+    icon.setAttribute('icon', this.icon);
+    desktop.append(icon);
+
     this.remove();
   }
 
