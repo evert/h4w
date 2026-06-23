@@ -70,7 +70,7 @@ pixelated.
 Providing an `icon` is optional. If it's omitted we will try to lowercase the title and
 see if an icon with that name exists in `frontend/image/icons/homelab/[name.png]`.
 
-Adding more groups / menus 
+Adding more groups / menus
 --------------------------
 
 You can create additional menus by making more `.json` files in the `data/` directory.
