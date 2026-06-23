@@ -15,8 +15,8 @@ const app = new Hono();
 
 app.use(logger());
 
-app.use('/*', serveStatic({ root: frontendDir }));
 app.use('/*', serveStatic({ root: dataDir }));
+app.use('/*', serveStatic({ root: frontendDir }));
 
 const port = Number(process.env['PORT'] ?? 3111);
 

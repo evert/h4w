@@ -7,6 +7,7 @@ Changelog
 * Use big minus for context menu.
 * Allow users to create more submenus/groups.
 * Any path in the frontend can now be overridden from the data/ directory.
+* Allow users to override anything in `data` directory, including `index.html`.
 
 
 0.1.0 (2026-05-25)
