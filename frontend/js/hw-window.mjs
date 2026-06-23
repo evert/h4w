@@ -71,12 +71,6 @@ export class HwWindow extends HTMLElement {
   }
 
   minimize() {
-    const src = this.getAttribute('src');
-    if (!src) {
-      this.remove();
-      return;
-    }
-
     const desktop = document.querySelector('.desktop-icons');
     if (!desktop) {
       console.error('No .desktop-icons container found');
@@ -84,13 +78,18 @@ export class HwWindow extends HTMLElement {
     }
 
     const icon = document.createElement('hw-icon');
-    icon.setAttribute('type', 'group');
-    icon.setAttribute('href', src);
+    icon.setAttribute('type', 'window');
     icon.setAttribute('title', this.getAttribute('title') ?? 'Untitled');
     icon.setAttribute('icon', this.icon);
     desktop.append(icon);
 
-    this.remove();
+    icon.querySelector('button').ondblclick = () => {
+      icon.remove();
+      this.removeAttribute('minimized');
+      this.activate();
+    };
+
+    this.setAttribute('minimized', '');
   }
 
   /**

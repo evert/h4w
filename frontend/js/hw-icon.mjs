@@ -9,9 +9,26 @@ class HwIcon extends HTMLElement {
   connectedCallback() {
 
     const title = this.getAttribute('title') ?? 'Untitled';
+    const type = this.getAttribute('type');
+    const iconSrc = resolveIconSrc(this.getAttribute('icon'), title);
+
+    if (type === 'window') {
+      this.setHTMLUnsafe(html`
+        <button>
+          <img src="${iconSrc}" alt="${title}" />
+          <span>${title}</span>
+        </button>
+      `);
+      const img = this.querySelector('img');
+      img.addEventListener('error', () => {
+        if (img.src.endsWith(FALLBACK_ICON)) return;
+        img.src = FALLBACK_ICON;
+      });
+      return;
+    }
+
     const href = this.getAttribute('href') ?? '#';
     const target = this.getAttribute('target') ?? '_blank';
-    const iconSrc = resolveIconSrc(this.getAttribute('icon'), title);
 
     this.setHTMLUnsafe(html`
       <a href="${href}" target="${target}">
@@ -33,7 +50,7 @@ class HwIcon extends HTMLElement {
     });
     anchor.addEventListener("dblclick", (e) => {
       e.preventDefault();
-      if (this.getAttribute('type') === 'group') {
+      if (type === 'group') {
         const existing = document.querySelector('hw-group[src="' + href + '"]');
         if (existing) return;
         const win = document.createElement('hw-group');
@@ -41,7 +58,7 @@ class HwIcon extends HTMLElement {
         document.body.appendChild(win);
         return;
       }
-      if (this.getAttribute('type') === 'iframe') {
+      if (type === 'iframe') {
         const existing = document.querySelector('hw-iframe[src="' + href + '"]');
         if (existing) return;
         const win = document.createElement('hw-iframe');
