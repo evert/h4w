@@ -47,7 +47,7 @@ body {
 
 }
 
-hw-window {
+:is(hw-window, hw-group) {
 
   display:block;
   border: 2px solid black;              /* inner black */

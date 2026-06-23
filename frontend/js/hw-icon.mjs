@@ -35,12 +35,12 @@ class HwIcon extends HTMLElement {
       e.preventDefault();
       if (this.getAttribute('type') === 'group') {
         // Find existing window with the same src.
-        const existing = document.querySelector('hw-window[src="' + href + '"]');
+        const existing = document.querySelector('hw-group[src="' + href + '"]');
         if (existing) {
           // Do nothing.
           return;
         }
-        const win = document.createElement('hw-window');
+        const win = document.createElement('hw-group');
         win.setAttribute('src', href);
         document.body.appendChild(win);
         return;

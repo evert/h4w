@@ -15,12 +15,12 @@ class HwOpen extends HTMLElement {
 
       const src = this.getAttribute("src");
       // Find existing window with the same src.
-      const existing = document.querySelector('hw-window[src="' + src + '"]');
+      const existing = document.querySelector('hw-group[src="' + src + '"]');
       if (existing) {
         // Do nothing.
         return;
       }
-      const win = document.createElement("hw-window");
+      const win = document.createElement("hw-group");
       win.setAttribute("src", src);
       document.body.appendChild(win);
 
