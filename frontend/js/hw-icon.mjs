@@ -12,7 +12,7 @@ class HwIcon extends HTMLElement {
     const type = this.getAttribute('type');
     const iconSrc = resolveIconSrc(this.getAttribute('icon'), title);
 
-    if (type === 'window') {
+    if (!this.hasAttribute('href')) {
       this.setHTMLUnsafe(html`
         <button>
           <img src="${iconSrc}" alt="${title}" />

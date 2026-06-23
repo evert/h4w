@@ -78,7 +78,6 @@ export class HwWindow extends HTMLElement {
     }
 
     const icon = document.createElement('hw-icon');
-    icon.setAttribute('type', 'window');
     icon.setAttribute('title', this.getAttribute('title') ?? 'Untitled');
     icon.setAttribute('icon', this.icon);
     desktop.append(icon);
