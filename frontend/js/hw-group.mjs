@@ -1,23 +1,27 @@
 // @ts-check
 import { HwWindow } from "./hw-window.mjs";
 
-class HwGroup extends HwWindow {
+class HwGroup extends HTMLElement {
 
-  /** @override */
+  /** @type {string} */
   icon = '/image/icons/win311/PROGM004.PNG';
 
-  /** @override */
   connectedCallback() {
-    super.connectedCallback();
+    this.win = /** @type {HwWindow} */ (document.createElement('hw-window'));
+    this.win.icon = this.icon;
     if (this.hasAttribute('src')) {
-      this.loadMenu(this.getAttribute('src'));
+      this.win.setAttribute('src', /** @type {string} */ (this.getAttribute('src')));
+    }
+    this.appendChild(this.win);
+
+    if (this.hasAttribute('src')) {
+      this.loadMenu(/** @type {string} */ (this.getAttribute('src')));
     }
   }
 
-  /** @override */
-
-
   /**
+   * Loads a menu JSON file.
+   *
    * @param {string} src
    */
   async loadMenu(src) {
@@ -28,8 +32,8 @@ class HwGroup extends HwWindow {
       return;
     }
     const json = await res.json();
-    this.setAttribute('title', json.title ?? 'Untitled');
-    if (json.icon) this.icon = json.icon;
+    this.win.setAttribute('title', json.title ?? 'Untitled');
+    if (json.icon) this.win.icon = json.icon;
 
     const icons = document.createElement('hw-icongrid');
     for (const item of json.items) {
@@ -40,7 +44,7 @@ class HwGroup extends HwWindow {
       if (item.type) icon.setAttribute('type', item.type);
       icons.append(icon);
     }
-    this.replaceContent(icons);
+    this.win.replaceContent(icons);
 
   }
 

@@ -1,4 +1,4 @@
-import { escapeHtml } from "./util.mjs";
+import { createOrFocus, html } from "./util.mjs";
 
 class HwIcon extends HTMLElement {
 
@@ -51,20 +51,11 @@ class HwIcon extends HTMLElement {
     anchor.addEventListener("dblclick", (e) => {
       e.preventDefault();
       if (type === 'group') {
-        const existing = document.querySelector('hw-group[src="' + href + '"]');
-        if (existing) return;
-        const win = document.createElement('hw-group');
-        win.setAttribute('src', href);
-        document.body.appendChild(win);
+        createOrFocus(href, 'hw-group', title);
         return;
       }
       if (type === 'iframe') {
-        const existing = document.querySelector('hw-iframe[src="' + href + '"]');
-        if (existing) return;
-        const win = document.createElement('hw-iframe');
-        win.setAttribute('src', href);
-        win.setAttribute('title', title);
-        document.body.appendChild(win);
+        createOrFocus(href, 'hw-iframe', title);
         return;
       }
       window.open(href, target);
@@ -94,17 +85,5 @@ function resolveIconSrc(icon, title) {
   }
   return icon;
 }
-
-/**
- * Template literal that HTML-escapes interpolated values.
- *
- * @param {TemplateStringsArray} strings
- * @param  {...any} values
- * @returns {string}
- */
-const html = (strings, ...values) =>
-  strings.reduce((out, str, i) => (
-    out + str + (i < values.length ? escapeHtml(values[i]) : '')
-  ), '');
 
 customElements.define("hw-icon", HwIcon);

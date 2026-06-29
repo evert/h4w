@@ -7,17 +7,6 @@ export class HwWindow extends HTMLElement {
   /** @type {string} */
   icon = '/image/icons/win311/PROGM003.PNG';
 
-  constructor() {
-    super();
-    if (this.hasAttribute('src')) {
-      const src = this.getAttribute('src');
-      const existingIcon = document.querySelector(`.desktop-icons hw-icon a[href="${src}"]`);
-      if (existingIcon) {
-        existingIcon.closest('hw-icon').remove();
-      }
-    }
-  }
-
   connectedCallback() {
 
     const children = Array.from(this.children);
@@ -34,9 +23,7 @@ export class HwWindow extends HTMLElement {
         <li>Edit</li>
         <li><hw-open src="/menu/credits.json">About</hw-open></li>
       </menu>
-      <div class="content">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.</p>
-      </div>
+      <div class="content"></div>
     `);
 
     this.querySelector('div').replaceChildren(...children);
@@ -61,7 +48,7 @@ export class HwWindow extends HTMLElement {
 
   activate() {
 
-    for (const win of document.querySelectorAll('hw-window[active], hw-group[active], hw-iframe[active]')) {
+    for (const win of document.querySelectorAll('hw-window[active]')) {
       if (win !== this) win.removeAttribute('active');
     }
     this.setAttribute('active', '');
