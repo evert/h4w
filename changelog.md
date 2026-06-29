@@ -4,11 +4,13 @@ Changelog
 0.2.0 (????-??-??)
 ------------------
 
+* Menu items can now open new submenus or iframes, for more creativity.
 * Use big minus for context menu.
-* Allow users to create more submenus/groups.
 * Any path in the frontend can now be overridden from the data/ directory.
 * Allow users to override anything in `data` directory, including `index.html`.
 * Now licensed as BSD 3-clause.
+* If you created your own hw-window elements, they just have been renamed to
+  hw-group. hw-window is a more general window component now.
 
 
 0.1.0 (2026-05-25)

@@ -1,4 +1,4 @@
-import { escapeHtml } from "./util.mjs";
+import { createOrFocus, html } from "./util.mjs";
 
 class HwIcon extends HTMLElement {
 
@@ -9,9 +9,26 @@ class HwIcon extends HTMLElement {
   connectedCallback() {
 
     const title = this.getAttribute('title') ?? 'Untitled';
+    const type = this.getAttribute('type');
+    const iconSrc = resolveIconSrc(this.getAttribute('icon'), title);
+
+    if (!this.hasAttribute('href')) {
+      this.setHTMLUnsafe(html`
+        <button>
+          <img src="${iconSrc}" alt="${title}" />
+          <span>${title}</span>
+        </button>
+      `);
+      const img = this.querySelector('img');
+      img.addEventListener('error', () => {
+        if (img.src.endsWith(FALLBACK_ICON)) return;
+        img.src = FALLBACK_ICON;
+      });
+      return;
+    }
+
     const href = this.getAttribute('href') ?? '#';
     const target = this.getAttribute('target') ?? '_blank';
-    const iconSrc = resolveIconSrc(this.getAttribute('icon'), title);
 
     this.setHTMLUnsafe(html`
       <a href="${href}" target="${target}">
@@ -33,16 +50,12 @@ class HwIcon extends HTMLElement {
     });
     anchor.addEventListener("dblclick", (e) => {
       e.preventDefault();
-      if (this.getAttribute('type') === 'group') {
-        // Find existing window with the same src.
-        const existing = document.querySelector('hw-window[src="' + href + '"]');
-        if (existing) {
-          // Do nothing.
-          return;
-        }
-        const win = document.createElement('hw-window');
-        win.setAttribute('src', href);
-        document.body.appendChild(win);
+      if (type === 'group') {
+        createOrFocus(href, 'hw-group', title);
+        return;
+      }
+      if (type === 'iframe') {
+        createOrFocus(href, 'hw-iframe', title);
         return;
       }
       window.open(href, target);
@@ -72,17 +85,5 @@ function resolveIconSrc(icon, title) {
   }
   return icon;
 }
-
-/**
- * Template literal that HTML-escapes interpolated values.
- *
- * @param {TemplateStringsArray} strings
- * @param  {...any} values
- * @returns {string}
- */
-const html = (strings, ...values) =>
-  strings.reduce((out, str, i) => (
-    out + str + (i < values.length ? escapeHtml(values[i]) : '')
-  ), '');
 
 customElements.define("hw-icon", HwIcon);

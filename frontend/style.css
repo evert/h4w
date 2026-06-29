@@ -1,7 +1,6 @@
 @font-face {
   font-family: 'winsystem';
   src: url('font/system-font/system-font.otf') format('opentype');
-  font-weight: normal;
   font-style: normal;
 }
 
@@ -47,7 +46,7 @@ body {
 
 }
 
-hw-window {
+:is(hw-window) {
 
   display:block;
   border: 2px solid black;              /* inner black */
@@ -73,6 +72,10 @@ hw-window {
     width: calc(100vw - calc(6px * var(--scale)));
     height: calc(100vh - calc(6px * var(--scale)));
     max-width: none;
+  }
+
+  &[minimized] {
+    display: none;
   }
 
 
@@ -174,7 +177,7 @@ hw-window {
 
 
 hw-icon {
-  a {
+  a, button {
     text-decoration: none;
     color: black;
     display: flex;
@@ -182,8 +185,13 @@ hw-icon {
     align-items: center;
     width: calc(64px * var(--scale));
     gap: calc(4px * var(--scale));
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: default;
+    font: inherit;
   }
-  a:focus span {
+  a:focus span, button:focus span {
     background-color: var(--window-title);
     color: white;
   }
@@ -222,7 +230,19 @@ hw-open {
   }
 }
 
-.main-window {
+hw-iframe hw-window {
+  max-width: none;
+  width: calc(640px * var(--scale));
+  height: calc(480px * var(--scale));
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+.main-window hw-window {
   min-width: calc(300px * var(--scale));
   min-height: calc(200px * var(--scale));
 }
