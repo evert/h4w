@@ -19,7 +19,13 @@ export class HwWindow extends HTMLElement {
       </hw-titlebar>
 
       <menu>
-        <li>File</li>
+        <li>File
+          <menu>
+            <li>Minimize</li>
+            <li>Maximize</li>
+            <li>Close</li>
+          </menu>
+        </li>
         <li>Edit</li>
         <li><hw-open src="/menu/credits.json">About</hw-open></li>
       </menu>
