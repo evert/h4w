@@ -1,3 +1,5 @@
+import { createOrFocus } from "./util.mjs";
+
 class HwOpen extends HTMLElement {
 
   constructor() {
@@ -13,19 +15,13 @@ class HwOpen extends HTMLElement {
 
     button.addEventListener("click", () => {
 
-      const src = this.getAttribute("src");
-      // Find existing window with the same src.
-      const existing = document.querySelector('hw-window[src="' + src + '"]');
-      if (existing) {
-        // Do nothing.
-        return;
-      }
-      const win = document.createElement("hw-window");
-      win.setAttribute("src", src);
-      document.body.appendChild(win);
+      createOrFocus(
+        this.getAttribute('src'),
+        'hw-group',
+        this.getAttribute('title')
+      );
 
     });
-
 
   }
 

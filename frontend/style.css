@@ -1,7 +1,6 @@
 @font-face {
   font-family: 'winsystem';
   src: url('font/system-font/system-font.otf') format('opentype');
-  font-weight: normal;
   font-style: normal;
 }
 
@@ -30,14 +29,17 @@
 body {
   background: url('image/bg/Castle.gif');
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   font-family: 'winsystem', sans-serif;
   font-size: var(--font-size);
   letter-spacing: 1px;
   margin: 0;
   padding: 0;
+
+  > * {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 * {
@@ -47,7 +49,7 @@ body {
 
 }
 
-hw-window {
+:is(hw-window) {
 
   display:block;
   border: 2px solid black;              /* inner black */
@@ -75,7 +77,10 @@ hw-window {
     max-width: none;
   }
 
-  max-width: calc(400px * var(--scale));
+  &[minimized] {
+    display: none;
+  }
+
 
   menu {
     margin: 0;
@@ -175,7 +180,7 @@ hw-window {
 
 
 hw-icon {
-  a {
+  a, button {
     text-decoration: none;
     color: black;
     display: flex;
@@ -183,8 +188,13 @@ hw-icon {
     align-items: center;
     width: calc(64px * var(--scale));
     gap: calc(4px * var(--scale));
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: default;
+    font: inherit;
   }
-  a:focus span {
+  a:focus span, button:focus span {
     background-color: var(--window-title);
     color: white;
   }
@@ -198,13 +208,6 @@ hw-icon {
     font-size: var(--font-size-sm);
     font-family: 'ms-sans-serif', sans-serif;
     text-align: center;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
   }
 }
 
@@ -213,6 +216,8 @@ hw-icongrid {
   flex-wrap: wrap;
   padding: calc(8px * var(--scale));
   flex: 1;
+  align-content: start;
+  gap: calc(8px * var(--scale));
 }
 
 hw-iconlist {
@@ -230,14 +235,45 @@ hw-open {
   }
 }
 
-.main-window {
+hw-iframe hw-window {
+  max-width: none;
+  width: calc(640px * var(--scale));
+  height: calc(480px * var(--scale));
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+.main-window hw-window {
   min-width: calc(300px * var(--scale));
   min-height: calc(200px * var(--scale));
 }
 
 .desktop-icons {
   position: fixed;
+  display: flex;
+  align-content: end;
   bottom: calc(8px * var(--scale));
   left: calc(8px * var(--scale));
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  /**
+   * All windows permanently are maximized
+   */
+
+  hw-window {
+    width: calc(100vw - calc(6px * var(--scale))) !important;
+    height: calc(100vh - calc(6px * var(--scale))) !important;
+    max-width: none;
+    top: calc(3px * var(--scale)) !important;
+    left: calc(3px * var(--scale)) !important;
+  }
 
 }
+

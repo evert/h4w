@@ -1,10 +1,25 @@
 Changelog
 =========
 
-0.0.4 (????-??-??)
+0.2.0 (2026-06-30)
 ------------------
 
+* Menu items can now open new submenus or iframes, for more creativity.
+* Decent mobile styles
 * Use big minus for context menu.
+* Any path in the frontend can now be overridden from the data/ directory.
+* Allow users to override anything in `data` directory, including `index.html`.
+* Now licensed as BSD 3-clause.
+* If you created your own hw-window elements, they just have been renamed to
+  hw-group. hw-window is a more general window component now.
+
+
+0.1.0 (2026-05-25)
+------------------
+
+* Some more docs in the README.
+* Minimizing works!
+* Include a systemd example unit file.
 
 
 0.0.3 (2026-04-30)
