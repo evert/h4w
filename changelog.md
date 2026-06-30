@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.0 (????-??-??)
+0.2.0 (2026-06-30)
 ------------------
 
 * Menu items can now open new submenus or iframes, for more creativity.
