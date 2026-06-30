@@ -7,6 +7,9 @@ export class HwWindow extends HTMLElement {
   /** @type {string} */
   icon = '/image/icons/win311/PROGM003.PNG';
 
+  /** @type {HTMLElement|null} */
+  desktopIcon = null;
+
   connectedCallback() {
 
     const children = Array.from(this.children);
@@ -64,6 +67,7 @@ export class HwWindow extends HTMLElement {
     this.setAttribute('active', '');
     topZ += 1;
     this.style.zIndex = String(topZ);
+    this.unminimize();
 
   }
 
@@ -74,18 +78,25 @@ export class HwWindow extends HTMLElement {
       return;
     }
 
-    const icon = document.createElement('hw-icon');
+    const icon = this.desktopIcon ?? document.createElement('hw-icon');
     icon.setAttribute('title', this.getAttribute('title') ?? 'Untitled');
     icon.setAttribute('icon', this.icon);
     desktop.append(icon);
+    this.desktopIcon = icon;
 
     icon.querySelector('button').ondblclick = () => {
-      icon.remove();
-      this.removeAttribute('minimized');
-      this.activate();
+      this.unminimize();
     };
 
     this.setAttribute('minimized', '');
+  }
+
+  unminimize() {
+    if (this.desktopIcon) {
+      this.desktopIcon.remove();
+      this.desktopIcon = null;
+    }
+    this.removeAttribute('minimized');
   }
 
   /**

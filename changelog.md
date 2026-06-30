@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.2.1 (????-??-??)
+------------------
+
+* Fix: opening an already-minimized window will now unmimize it
+
+
 0.2.0 (2026-06-30)
 ------------------
 
