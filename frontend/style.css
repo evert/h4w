@@ -29,14 +29,17 @@
 body {
   background: url('image/bg/Castle.gif');
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   font-family: 'winsystem', sans-serif;
   font-size: var(--font-size);
   letter-spacing: 1px;
   margin: 0;
   padding: 0;
+
+  > * {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 * {
@@ -213,6 +216,8 @@ hw-icongrid {
   flex-wrap: wrap;
   padding: calc(8px * var(--scale));
   flex: 1;
+  align-content: start;
+  gap: calc(8px * var(--scale));
 }
 
 hw-iconlist {
@@ -249,6 +254,26 @@ hw-iframe hw-window {
 
 .desktop-icons {
   position: fixed;
+  display: flex;
+  align-content: end;
   bottom: calc(8px * var(--scale));
   left: calc(8px * var(--scale));
 }
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  /**
+   * All windows permanently are maximized
+   */
+
+  hw-window {
+    width: calc(100vw - calc(6px * var(--scale))) !important;
+    height: calc(100vh - calc(6px * var(--scale))) !important;
+    max-width: none;
+    top: calc(3px * var(--scale)) !important;
+    left: calc(3px * var(--scale)) !important;
+  }
+
+}
+
