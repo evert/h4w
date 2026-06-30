@@ -24,6 +24,8 @@
   --font-size-sm: calc(10px * var(--scale));
   --unit-size: calc(1px * var(--scale));
 
+  --hw-icon-width: calc(64px * var(--scale));
+
 }
 
 body {
@@ -186,7 +188,7 @@ hw-icon {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: calc(64px * var(--scale));
+    width: var(--hw-icon-width);
     gap: calc(4px * var(--scale));
     background: none;
     border: none;
@@ -208,6 +210,8 @@ hw-icon {
     font-size: var(--font-size-sm);
     font-family: 'ms-sans-serif', sans-serif;
     text-align: center;
+    word-wrap: break-word;
+    max-width: var(--hw-icon-width);
   }
 }
 
@@ -279,6 +283,13 @@ hw-iframe hw-window {
     min-width: 0 !important;
     min-height: 0 !important;
   }
+
+  hw-icongrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--hw-icon-width));
+    justify-content: center;
+  }
+
 
 }
 
