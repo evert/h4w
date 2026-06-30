@@ -44,6 +44,16 @@ export class HwWindow extends HTMLElement {
 
     draggable(this.querySelector('hw-titlebar h1'), this);
 
+    const rect = this.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    if (!this.style.left) {
+      this.style.left = `${(viewportWidth - rect.width) / 2}px`;
+    }
+    if (!this.style.top) {
+      this.style.top = `${(viewportHeight - rect.height) / 2}px`;
+    }
+
   }
 
   activate() {
