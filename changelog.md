@@ -5,7 +5,7 @@ Changelog
 ------------------
 
 * Fix: opening an already-minimized window will now unmimize it
-
+* Fix: Mobile now users a slightly smaller scale and is more usable
 
 0.2.0 (2026-06-30)
 ------------------

@@ -263,6 +263,9 @@ hw-iframe hw-window {
 /* Mobile */
 
 @media (max-width: 768px) {
+  * {
+    --scale: 1.5;
+  }
   /**
    * All windows permanently are maximized
    */
@@ -273,6 +276,8 @@ hw-iframe hw-window {
     max-width: none;
     top: calc(3px * var(--scale)) !important;
     left: calc(3px * var(--scale)) !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
   }
 
 }
