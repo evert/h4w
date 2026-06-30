@@ -10,13 +10,20 @@ firstStart();
 const rootDir = path.resolve(import.meta.dirname, '..');
 const frontendDir = path.join(rootDir, 'frontend');
 const dataDir = path.join(rootDir, 'data');
+const exampleData = path.join(rootDir, 'example-data');
 
 const app = new Hono();
 
 app.use(logger());
 
+// User-provided data. This might override anything in frontend.
 app.use('/*', serveStatic({ root: dataDir }));
+
+// Default frontend assets
 app.use('/*', serveStatic({ root: frontendDir }));
+
+// Fall back on default menus
+app.use('/*', serveStatic({ root: exampleData }));
 
 const port = Number(process.env['PORT'] ?? 3111);
 

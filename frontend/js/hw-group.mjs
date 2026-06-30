@@ -48,6 +48,10 @@ class HwGroup extends HTMLElement {
 
   }
 
+  activate() {
+    this.win.activate();
+  }
+
 }
 
 customElements.define("hw-group", HwGroup);
