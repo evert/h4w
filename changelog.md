@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 * Menu items can now open new submenus or iframes, for more creativity.
+* Decent mobile styles
 * Use big minus for context menu.
 * Any path in the frontend can now be overridden from the data/ directory.
 * Allow users to override anything in `data` directory, including `index.html`.
