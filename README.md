@@ -86,7 +86,8 @@ To open them from the main menu, add `type: "group"` to an icon:
     {
       "title": "Sub menu",
       "icon": "/image/icons/win311/PROGM004.PNG",
-      "href": "https://jellyfin.example.com/"
+      "href": "https://jellyfin.example.com/",
+      "type": "group"
     }
   ]
 
@@ -96,6 +97,26 @@ To open them from the main menu, add `type: "group"` to an icon:
 Note that these `.json` files can come from anywhere, including other servers (if CORS headers are set up correctly). This could
 allow you to generate menus dynamically using your own code.
 
+
+Opening items as iframes
+------------------------
+
+Any url can also be opened in an iframe window:
+
+```json
+{
+  "title": "Menu",
+
+  "items": [
+    {
+      "title": "Search",
+      "href": "https://duckduckgo.com/",
+      "type": "iframe"
+    }
+  ]
+
+}
+```
 
 Can you implement x / x doesn't work
 ------------------------------------
