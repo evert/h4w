@@ -1,6 +1,14 @@
 import { createOrFocus, html } from "./util.mjs";
+/** @import HwWindow from ('./hw-window.mjs') */
 
 class HwIcon extends HTMLElement {
+
+  /**
+   * If the icon is already attached to a window it won't create a new one.
+   *
+   * @type {HwWindow|null}
+   */
+  window = null;
 
   constructor() {
     super();
@@ -23,6 +31,11 @@ class HwIcon extends HTMLElement {
       img.addEventListener('error', () => {
         if (img.src.endsWith(FALLBACK_ICON)) return;
         img.src = FALLBACK_ICON;
+      });
+      this.querySelector('button').addEventListener("dblclick", () => {
+        if (this.window) {
+          this.window.unminimize();
+        }
       });
       return;
     }
@@ -50,6 +63,7 @@ class HwIcon extends HTMLElement {
     });
     anchor.addEventListener("dblclick", (e) => {
       e.preventDefault();
+      if (this.window) this.window.unminimize();
       if (type === 'group') {
         createOrFocus(href, 'hw-group', title);
         return;
