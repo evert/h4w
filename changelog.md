@@ -4,8 +4,10 @@ Changelog
 0.2.1 (????-??-??)
 ------------------
 
-* Fix: opening an already-minimized window will now unmimize it
-* Fix: Mobile now users a slightly smaller scale and is more usable
+* Fix: opening an already-minimized window will now unminimize it.
+* Fix: Mobile now users a slightly smaller scale and is more usable.
+* Add icon for lldap.
+
 
 0.2.0 (2026-06-30)
 ------------------

@@ -9,6 +9,7 @@ class HwIframe extends HTMLElement {
   connectedCallback() {
     this.win = document.createElement('hw-window');
     this.win.setAttribute('title', this.getAttribute('title') ?? 'Untitled');
+    this.win.app = this;
     if (this.hasAttribute('src')) {
       const src = /** @type {string} */ (this.getAttribute('src'));
       this.win.setAttribute('src', src);

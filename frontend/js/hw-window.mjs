@@ -1,5 +1,6 @@
 // @ts-check no-strict
 import { draggable } from "./draggable.mjs";
+/** @import HwIcon from ('./hw-icon.mjs') */
 
 export class HwWindow extends HTMLElement {
 
@@ -9,6 +10,9 @@ export class HwWindow extends HTMLElement {
 
   /** @type {HTMLElement|null} */
   desktopIcon = null;
+
+  /** @type {HTMLElement|null} */
+  app;
 
   connectedCallback() {
 
@@ -43,6 +47,7 @@ export class HwWindow extends HTMLElement {
     this.addEventListener("mousedown", () => {
       this.activate();
     });
+    this.recoverDesktopIcon();
     this.activate();
 
     draggable(this.querySelector('hw-titlebar h1'), this);
@@ -78,25 +83,32 @@ export class HwWindow extends HTMLElement {
       return;
     }
 
-    const icon = this.desktopIcon ?? document.createElement('hw-icon');
+    const icon = /** @type {HwIcon} */(this.desktopIcon ?? document.createElement('hw-icon'));
     icon.setAttribute('title', this.getAttribute('title') ?? 'Untitled');
     icon.setAttribute('icon', this.icon);
+    icon.window = this;
+
     desktop.append(icon);
     this.desktopIcon = icon;
-
-    icon.querySelector('button').ondblclick = () => {
-      this.unminimize();
-    };
-
     this.setAttribute('minimized', '');
   }
 
   unminimize() {
     if (this.desktopIcon) {
       this.desktopIcon.remove();
-      this.desktopIcon = null;
     }
     this.removeAttribute('minimized');
+  }
+
+  /**
+   * If there's a disconnected desktop icon, this method will reconnect it.
+   */
+  recoverDesktopIcon() {
+    if (!this.desktopIcon && this.app?.getAttribute('src')) {
+      const src = this.app.getAttribute('src');
+      this.desktopIcon = document.querySelector(`.desktop-icons hw-icon[href="${src}"]`);
+    }
+    return this.desktopIcon;
   }
 
   /**
