@@ -76,6 +76,8 @@ body {
   &[maximized] {
     width: calc(100vw - calc(6px * var(--scale)));
     height: calc(100vh - calc(6px * var(--scale)));
+    left: calc(3px * var(--scale)) !important;
+    top: calc(3px * var(--scale)) !important;
     max-width: none;
   }
 
@@ -88,37 +90,52 @@ body {
     margin: 0;
     height: var(--bar-height);
     display: flex;
-    padding-left: calc(8px * var(--scale));
     gap: calc(4px * var(--scale));
+    padding: 0;
+
     li {
       list-style: none;
-      padding: calc(1px * var(--scale)) calc(4px * var(--scale));
       margin: 0;
       display: flex;
       margin: 0;
       gap: 5px;
 
-      &:hover {
-        background-color: var(--window-title);
-        color: white;
+      span {
+        padding: calc(1px * var(--scale)) calc(8px * var(--scale));
+        &:hover {
+          background-color: var(--window-title);
+          color: white;
+        }
       }
+
       > menu {
         flex-direction: column;
         color: black;
         position: absolute;
-        display: flex;
+        display: none;
         border: calc(1px * var(--scale)) solid black;
         background-color: var(--window-background);
         height: auto;
-        margin-top: var(--bar-height);
-        &[open] {
-          display: flex;
+        margin-top: calc(var(--bar-height) - var(--unit-size));
+        margin-left: calc(-1px * var(--scale));
+
+        li span {
+          width: 100%;
+          padding: var(--unit-size) calc(16px * var(--scale));
         }
+
+
+      }
+      &[open] menu {
+        /* Open submenu */
+        display: flex;
       }
     }
 
-
   }
+  &[maximized] menu li[data-action="maximize"] { display: none; }
+  &:not(&[maximized]) menu li[data-action="restore"] { display: none; }
+
   hw-titlebar {
     background: black;
     color: white;

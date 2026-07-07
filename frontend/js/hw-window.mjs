@@ -1,6 +1,8 @@
 // @ts-check no-strict
 import { draggable } from "./draggable.mjs";
+import { createOrFocus } from "./util.mjs";
 /** @import HwIcon from ('./hw-icon.mjs') */
+/** @import Menu from ('./menu.ts') */
 
 export class HwWindow extends HTMLElement {
 
@@ -25,17 +27,7 @@ export class HwWindow extends HTMLElement {
         <button class="maximize">Maximize</button>
       </hw-titlebar>
 
-      <menu>
-        <li>File
-          <menu>
-            <li>Minimize</li>
-            <li>Maximize</li>
-            <li>Close</li>
-          </menu>
-        </li>
-        <li>Edit</li>
-        <li><hw-open src="/menu/credits.json">About</hw-open></li>
-      </menu>
+      <menu></menu>
       <div class="content"></div>
     `);
 
@@ -43,7 +35,7 @@ export class HwWindow extends HTMLElement {
     this.querySelector('hw-titlebar h1').textContent = this.getAttribute("title") ?? "Untitled";
 
     this.querySelector("hw-titlebar .maximize").addEventListener("click", () => {
-      this.toggleAttribute("maximized");
+      this.toggleMaximize();
     });
 
     this.querySelector("hw-titlebar .minimize").addEventListener("click", () => {
@@ -67,6 +59,28 @@ export class HwWindow extends HTMLElement {
     if (!this.style.top) {
       this.style.top = `${(viewportHeight - rect.height) / 2}px`;
     }
+
+    this.setMenu([
+      {
+        label: "File",
+        submenu: [
+          { label: "Minimize", action: 'minimize' },
+          { label: "Maximize", action: 'maximize' },
+          { label: "Restore", action: 'restore' },
+          { label: "Close", action: 'close' }
+        ]
+      },
+      {
+        label: "Edit",
+        submenu: [
+          { label: "This is just decorative" }
+        ]
+      },
+      {
+        label: "Credits",
+        href: "/menu/credits.json"
+      }
+    ]);
 
   }
 
@@ -105,6 +119,11 @@ export class HwWindow extends HTMLElement {
     }
     this.removeAttribute('minimized');
   }
+
+  toggleMaximize() {
+    this.toggleAttribute('maximized');
+  }
+
 
   /**
    * If there's a disconnected desktop icon, this method will reconnect it.
@@ -148,8 +167,84 @@ export class HwWindow extends HTMLElement {
     }
   }
 
+  /**
+   * @param {Menu[]} menu
+   */
+  setMenu(menu) {
+
+    this.querySelector('menu').replaceChildren(...renderMenu(menu, this));
+
+  }
+
 }
 
 let topZ = 0;
 
 customElements.define("hw-window", HwWindow);
+
+
+/**
+ * @param {Menu[]} menuItems
+ * @param {HwWindow} wdw
+ * @returns {HTMLElement[]}
+ */
+function renderMenu(menuItems, wdw) {
+
+  const children = [];
+  for(const menuItem of menuItems) {
+    const li = document.createElement('li');
+    if (menuItem.action) li.setAttribute('data-action', menuItem.action);
+    const span = document.createElement('span');
+    span.textContent = menuItem.label;
+    li.appendChild(span);
+
+    if (menuItem.submenu && menuItem.submenu.length > 0) {
+      const submenu = document.createElement('menu');
+      submenu.append(...renderMenu(menuItem.submenu, wdw));
+      li.appendChild(submenu);
+
+    }
+    setupMenuAction(menuItem, li, wdw);
+
+    children.push(li);
+  }
+  return children;
+}
+
+/**
+ * @param {Menu} menuItem
+ * @param {HTMLElement} elem
+ * @param {HwWindow} wdw
+ */
+function setupMenuAction(menuItem, elem, wdw) {
+
+  if (menuItem?.submenu?.length > 0) {
+    elem.addEventListener('click', (event) => {
+      event.stopPropagation();
+      elem.toggleAttribute('open');
+    });
+    return;
+  }
+
+  if (menuItem.href) {
+    elem.addEventListener('click', (event) => {
+      event.stopPropagation();
+      createOrFocus(menuItem.href, 'hw-group', menuItem.label);
+    });
+  }
+  switch (elem.getAttribute('data-action')) {
+    case 'minimize':
+      elem.addEventListener('click', () => {
+        wdw.minimize();
+      });
+      break;
+    case 'maximize':
+    case 'restore':
+      elem.addEventListener('click', () => {
+        wdw.toggleMaximize();
+      });
+      break;
+  }
+
+
+}
