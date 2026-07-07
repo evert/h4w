@@ -11,12 +11,10 @@
 export function createOrFocus(src, elementName, title) {
 
   const selector = `${elementName}[src="${escapeHtml(src)}"]`;
-  console.log("createOrFocus selector:", selector);
 
   const existing = /** @type {any} */(document.querySelector(selector));
   if (existing) {
-    existing.removeAttribute('minimized');
-    existing?.activate()
+    existing.activate()
     return existing;
   }
 

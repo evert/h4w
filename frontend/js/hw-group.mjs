@@ -9,9 +9,7 @@ class HwGroup extends HTMLElement {
   connectedCallback() {
     this.win = /** @type {HwWindow} */ (document.createElement('hw-window'));
     this.win.icon = this.icon;
-    if (this.hasAttribute('src')) {
-      this.win.setAttribute('src', /** @type {string} */ (this.getAttribute('src')));
-    }
+    this.win.app = this;
     this.appendChild(this.win);
 
     if (this.hasAttribute('src')) {

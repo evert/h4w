@@ -1,11 +1,18 @@
 // @ts-check no-strict
 import { draggable } from "./draggable.mjs";
+/** @import HwIcon from ('./hw-icon.mjs') */
 
 export class HwWindow extends HTMLElement {
 
   static observedAttributes = ["title"];
   /** @type {string} */
   icon = '/image/icons/win311/PROGM003.PNG';
+
+  /** @type {HTMLElement|null} */
+  desktopIcon = null;
+
+  /** @type {HTMLElement|null} */
+  app;
 
   connectedCallback() {
 
@@ -46,6 +53,7 @@ export class HwWindow extends HTMLElement {
     this.addEventListener("mousedown", () => {
       this.activate();
     });
+    this.recoverDesktopIcon();
     this.activate();
 
     draggable(this.querySelector('hw-titlebar h1'), this);
@@ -70,6 +78,7 @@ export class HwWindow extends HTMLElement {
     this.setAttribute('active', '');
     topZ += 1;
     this.style.zIndex = String(topZ);
+    this.unminimize();
 
   }
 
@@ -80,18 +89,32 @@ export class HwWindow extends HTMLElement {
       return;
     }
 
-    const icon = document.createElement('hw-icon');
+    const icon = /** @type {HwIcon} */(this.desktopIcon ?? document.createElement('hw-icon'));
     icon.setAttribute('title', this.getAttribute('title') ?? 'Untitled');
     icon.setAttribute('icon', this.icon);
+    icon.window = this;
+
     desktop.append(icon);
-
-    icon.querySelector('button').ondblclick = () => {
-      icon.remove();
-      this.removeAttribute('minimized');
-      this.activate();
-    };
-
+    this.desktopIcon = icon;
     this.setAttribute('minimized', '');
+  }
+
+  unminimize() {
+    if (this.desktopIcon) {
+      this.desktopIcon.remove();
+    }
+    this.removeAttribute('minimized');
+  }
+
+  /**
+   * If there's a disconnected desktop icon, this method will reconnect it.
+   */
+  recoverDesktopIcon() {
+    if (!this.desktopIcon && this.app?.getAttribute('src')) {
+      const src = this.app.getAttribute('src');
+      this.desktopIcon = document.querySelector(`.desktop-icons hw-icon[href="${src}"]`);
+    }
+    return this.desktopIcon;
   }
 
   /**
