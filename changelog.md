@@ -7,6 +7,9 @@ Changelog
 * Fix: opening an already-minimized window will now unminimize it.
 * Fix: Mobile now users a slightly smaller scale and is more usable.
 * Add icon for lldap.
+* The window menu can now be dropdown menus and are dynamically generated. This
+  will soon allow users to create custom menus.
+* Fix maximize bug.
 
 
 0.2.0 (2026-06-30)
