@@ -90,7 +90,6 @@ body {
     margin: 0;
     height: var(--bar-height);
     display: flex;
-    gap: calc(4px * var(--scale));
     padding: 0;
 
     li {
