@@ -1,5 +1,5 @@
 // @ts-check
-/** @import HwWindow from ('./hw-window.mjs') */
+/** @import { HwWindow } from "./hw-window.mjs" */
 
 class HwIframe extends HTMLElement {
 
@@ -7,7 +7,7 @@ class HwIframe extends HTMLElement {
   win;
 
   connectedCallback() {
-    this.win = document.createElement('hw-window');
+    this.win = /** @type {HwWindow} */ (document.createElement('hw-window'));
     this.win.setAttribute('title', this.getAttribute('title') ?? 'Untitled');
     this.win.app = this;
     if (this.hasAttribute('src')) {
