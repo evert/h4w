@@ -1,8 +1,8 @@
 // @ts-check no-strict
 import { draggable } from "./draggable.mjs";
-import { createOrFocus } from "./util.mjs";
-/** @import HwIcon from ('./hw-icon.mjs') */
-/** @import Menu from ('./menu.ts') */
+import { createOrFocus, setTheme } from "./util.mjs";
+/** @import { HwIcon } from "./hw-icon.mjs" */
+/** @import { Menu } from "./types.ts" */
 
 export class HwWindow extends HTMLElement {
 
@@ -60,27 +60,29 @@ export class HwWindow extends HTMLElement {
       this.style.top = `${(viewportHeight - rect.height) / 2}px`;
     }
 
-    this.setMenu([
+    /** @type {Menu[]} */
+    const menu = [
       {
-        label: "File",
+        title: "File",
         submenu: [
-          { label: "Minimize", action: 'minimize' },
-          { label: "Maximize", action: 'maximize' },
-          { label: "Restore", action: 'restore' },
-          { label: "Close", action: 'close' }
+          { title: "Minimize", action: 'minimize' },
+          { title: "Maximize", action: 'maximize' },
+          { title: "Restore", action: 'restore' },
+          { title: "Close", action: 'close' }
         ]
       },
       {
-        label: "Edit",
+        title: "Edit",
         submenu: [
-          { label: "This is just decorative" }
+          { title: "This is just decorative" }
         ]
       },
       {
-        label: "Credits",
+        title: "Credits",
         href: "/menu/credits.json"
       }
-    ]);
+    ];
+    this.menu = menu;
 
   }
 
@@ -168,17 +170,28 @@ export class HwWindow extends HTMLElement {
   }
 
   /**
+   * @type {Menu[]}
+   */
+  #menu = [];
+
+  /**
    * @param {Menu[]} menu
    */
-  setMenu(menu) {
+  set menu(menu) {
 
+    this.#menu = menu;
     this.querySelector('menu').replaceChildren(...renderMenu(menu, this));
 
+  }
+
+  get menu() {
+    return this.#menu;
   }
 
 }
 
 let topZ = 0;
+let anchorId = 0;
 
 customElements.define("hw-window", HwWindow);
 
@@ -194,12 +207,17 @@ function renderMenu(menuItems, wdw) {
   for(const menuItem of menuItems) {
     const li = document.createElement('li');
     if (menuItem.action) li.setAttribute('data-action', menuItem.action);
+    if (menuItem.value) li.setAttribute('data-value', menuItem.value);
     const span = document.createElement('span');
-    span.textContent = menuItem.label;
+    span.textContent = menuItem.title;
     li.appendChild(span);
 
     if (menuItem.submenu && menuItem.submenu.length > 0) {
       const submenu = document.createElement('menu');
+      submenu.setAttribute('popover', 'auto');
+      const anchorName = `--menu-anchor-${anchorId++}`;
+      li.style.setProperty('anchor-name', anchorName);
+      submenu.style.setProperty('position-anchor', anchorName);
       submenu.append(...renderMenu(menuItem.submenu, wdw));
       li.appendChild(submenu);
 
@@ -221,7 +239,7 @@ function setupMenuAction(menuItem, elem, wdw) {
   if (menuItem?.submenu?.length > 0) {
     elem.addEventListener('click', (event) => {
       event.stopPropagation();
-      elem.toggleAttribute('open');
+      elem.querySelector('menu')?.togglePopover();
     });
     return;
   }
@@ -229,7 +247,7 @@ function setupMenuAction(menuItem, elem, wdw) {
   if (menuItem.href) {
     elem.addEventListener('click', (event) => {
       event.stopPropagation();
-      createOrFocus(menuItem.href, 'hw-group', menuItem.label);
+      createOrFocus(menuItem.href, 'hw-group', menuItem.title);
     });
   }
   switch (elem.getAttribute('data-action')) {

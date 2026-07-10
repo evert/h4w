@@ -1,7 +1,7 @@
 import { createOrFocus, html } from "./util.mjs";
-/** @import HwWindow from ('./hw-window.mjs') */
+/** @import { HwWindow } from "./hw-window.mjs" */
 
-class HwIcon extends HTMLElement {
+export class HwIcon extends HTMLElement {
 
   /**
    * If the icon is already attached to a window it won't create a new one.

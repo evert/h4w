@@ -1,5 +1,6 @@
 // @ts-check
 import { HwWindow } from "./hw-window.mjs";
+/** @import { Group } from "./types.ts" */
 
 class HwGroup extends HTMLElement {
 
@@ -29,6 +30,7 @@ class HwGroup extends HTMLElement {
       console.error("Failed to load menu:", res.status);
       return;
     }
+    /** @type {Group} */
     const json = await res.json();
     this.win.setAttribute('title', json.title ?? 'Untitled');
     if (json.icon) this.win.icon = json.icon;
@@ -43,6 +45,10 @@ class HwGroup extends HTMLElement {
       icons.append(icon);
     }
     this.win.replaceContent(icons);
+
+    if (json.menu) {
+      this.win.menu = [this.win.menu[0], ...json.menu];
+    }
 
   }
 

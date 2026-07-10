@@ -86,7 +86,7 @@ body {
   }
 
 
-  menu {
+  > menu {
     margin: 0;
     height: var(--bar-height);
     display: flex;
@@ -108,26 +108,26 @@ body {
       }
 
       > menu {
+        padding: 0;
+        display: none;
         flex-direction: column;
         color: black;
         position: absolute;
-        display: none;
+        top: anchor(bottom);
+        left: anchor(left);
+        margin: 0 0 0 calc(-1px * var(--scale));
         border: calc(1px * var(--scale)) solid black;
         background-color: var(--window-background);
-        height: auto;
-        margin-top: calc(var(--bar-height) - var(--unit-size));
-        margin-left: calc(-1px * var(--scale));
+
+        &:popover-open {
+          display: flex;
+        }
 
         li span {
           width: 100%;
           padding: var(--unit-size) calc(16px * var(--scale));
         }
 
-
-      }
-      &[open] menu {
-        /* Open submenu */
-        display: flex;
       }
     }
 
