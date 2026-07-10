@@ -262,7 +262,12 @@ function setupMenuAction(menuItem, elem, wdw) {
         wdw.toggleMaximize();
       });
       break;
+    case 'theme' :
+      elem.addEventListener('click', () => {
+        const newTheme = elem.getAttribute('data-value');
+        setTheme(newTheme);
+      });
+      break;
   }
-
 
 }

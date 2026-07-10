@@ -19,5 +19,30 @@
       "icon": "/image/icons/other/evertpot.com.png",
       "href": "https://evertpot.com/"
     }
+  ],
+
+  "menu": [
+    {
+      "title": "Theme",
+      "submenu": [
+        {
+          "title": "Windows EGA default",
+          "action": "theme",
+          "value": "default"
+        },
+        {
+          "title": "Windows VGA default",
+          "action": "theme",
+          "value": "default256"
+        },
+        {
+          "title": "Hotdog stand",
+          "action": "theme",
+          "value": "hotdog-stand"
+        }
+      ]
+    }
   ]
+
+
 }
