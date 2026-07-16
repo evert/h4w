@@ -1,9 +1,12 @@
 Changelog
 =========
 
-0.2.1 (????-??-??)
+0.3.0 (????-??-??)
 ------------------
 
+* Menus are now groups! Sorry! We have a menus on windows as well and this was
+  getting confusing. Rename your 'menu' directory to 'group' and it should just
+  work.
 * The window menu can now be dropdown menus and are dynamically generated.
   This means custom menus are now possible from the JSON file.
 * Secret hot dog stand theme!
@@ -13,9 +16,8 @@ Changelog
 * Add icon for lldap.
 * The window menu can now be dropdown menus and are dynamically generated. This
   will soon allow users to create custom menus.
-* Fix maximize bug.
-
 * Fix: maximize bug.
+* Add Dockerfile, thanks @jamess60!
 
 
 0.2.0 (2026-06-30)
