@@ -14,20 +14,20 @@ class HwGroup extends HTMLElement {
     this.appendChild(this.win);
 
     if (this.hasAttribute('src')) {
-      this.loadMenu(/** @type {string} */ (this.getAttribute('src')));
+      this.loadGroup(/** @type {string} */ (this.getAttribute('src')));
     }
   }
 
   /**
-   * Loads a menu JSON file.
+   * Loads a group JSON file.
    *
    * @param {string} src
    */
-  async loadMenu(src) {
+  async loadGroup(src) {
 
     const res = await fetch(src);
     if (!res.ok) {
-      console.error("Failed to load menu:", res.status);
+      console.error("Failed to load group:", res.status);
       return;
     }
     /** @type {Group} */

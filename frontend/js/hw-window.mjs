@@ -79,7 +79,7 @@ export class HwWindow extends HTMLElement {
       },
       {
         title: "Credits",
-        href: "/menu/credits.json"
+        href: "/groups/credits.json"
       }
     ];
     this.menu = menu;
