@@ -22,7 +22,7 @@ app.use('/*', serveStatic({ root: dataDir }));
 // Default frontend assets
 app.use('/*', serveStatic({ root: frontendDir }));
 
-// Fall back on default menus
+// Fall back on default groups
 app.use('/*', serveStatic({ root: exampleData }));
 
 const port = Number(process.env['PORT'] ?? 3111);
