@@ -48,3 +48,29 @@ export function escapeHtml(value) {
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 }
+
+/**
+ * @param {string} theme
+ */
+export function setTheme(theme) {
+
+  /** @type {HTMLLinkElement|null} */
+  let linkElem = document.querySelector('link#theme-stylesheet');
+
+  if (theme === 'default') {
+    if (linkElem) {
+      linkElem.remove();
+    }
+    return;
+  }
+
+  if (!linkElem) {
+    linkElem = document.createElement('link');
+    linkElem.id = 'theme-stylesheet';
+    linkElem.rel = 'stylesheet';
+    document.head.appendChild(linkElem);
+  }
+
+  linkElem.href = `/css/theme/${theme}.css`;
+
+}

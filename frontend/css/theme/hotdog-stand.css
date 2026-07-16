@@ -1,0 +1,12 @@
+* {
+
+  --window-background: #ffff00;
+  --window-title: #000000;
+  --window-title-inactive: #FF0000;
+
+  --window-border-color: #F00;
+}
+
+body {
+  background: var(--window-background);
+}

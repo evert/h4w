@@ -1,12 +1,12 @@
 @font-face {
   font-family: 'winsystem';
-  src: url('font/system-font/system-font.otf') format('opentype');
+  src: url('/font/system-font/system-font.otf') format('opentype');
   font-style: normal;
 }
 
 @font-face {
   font-family: 'ms-sans-serif';
-  src: url('font/ms-sans-serif/ms-sans-serif-1.ttf') format('truetype');
+  src: url('/font/ms-sans-serif/ms-sans-serif-1.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,10 +14,16 @@
 
 * {
   --scale: 2;
+
+  --window-background: #fff;
   --windows-grey: #c0c0c0;
 
   --window-title: #000080;
-  --window-background: #fff;
+  --window-title-inactive: #FFF;
+  --window-border-color: var(--windows-grey);
+
+
+  --menu-background: #fff;
 
   --bar-height: calc(18px * var(--scale));
   --font-size: calc(12px * var(--scale));
@@ -29,7 +35,7 @@
 }
 
 body {
-  background: url('image/bg/Castle.gif');
+  background: url('/image/bg/Castle.gif');
   display: flex;
   height: 100vh;
   font-family: 'winsystem', sans-serif;
@@ -56,7 +62,7 @@ body {
   display:block;
   border: 2px solid black;              /* inner black */
   box-shadow:
-    0 0 0 4px var(--windows-grey),     /* middle grey */
+    0 0 0 4px var(--window-border-color),     /* middle grey */
     0 0 0 6px black;                   /* outer black */
 
   display: flex;
@@ -91,6 +97,7 @@ body {
     height: var(--bar-height);
     display: flex;
     padding: 0;
+    background-color: var(--menu-background);
 
     li {
       list-style: none;
@@ -118,6 +125,7 @@ body {
         margin: 0 0 0 calc(-1px * var(--scale));
         border: calc(1px * var(--scale)) solid black;
         background-color: var(--window-background);
+        background-color: var(--menu-background);
 
         &:popover-open {
           display: flex;
@@ -145,7 +153,7 @@ body {
     gap: var(--unit-size);
     padding: 0;
     h1 {
-      background: var(--window-background);
+      background: var(--window-title-inactive);
       color: black;
       font-weight: normal;
       height: 100%;
@@ -171,15 +179,15 @@ body {
       image-rendering: pixelated;
 
       &.maximize {
-        background-image: url('image/icons/other/arrow-up.png');
+        background-image: url('/image/icons/other/arrow-up.png');
         background-size: calc(7px * var(--scale)) calc(4px * var(--scale));
       }
       &.minimize {
-        background-image: url('image/icons/other/arrow-down.png');
+        background-image: url('/image/icons/other/arrow-down.png');
         background-size: calc(7px * var(--scale)) calc(4px * var(--scale));
       }
       &.context-menu {
-        background-image: url('image/icons/other/big-minus.png');
+        background-image: url('/image/icons/other/big-minus.png');
         background-size: calc(13px * var(--scale)) calc(4px * var(--scale));
         border: none;
       }
@@ -194,7 +202,7 @@ body {
 
   &[maximized] hw-titlebar {
     button.maximize {
-      background-image: url('image/icons/other/arrow-up-down.png');
+      background-image: url('/image/icons/other/arrow-up-down.png');
       background-size: calc(7px * var(--scale)) calc(10px * var(--scale));
     }
   }

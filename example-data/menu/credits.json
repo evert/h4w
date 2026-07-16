@@ -19,5 +19,25 @@
       "icon": "/image/icons/other/evertpot.com.png",
       "href": "https://evertpot.com/"
     }
+  ],
+
+  "menu": [
+    {
+      "title": "Theme",
+      "submenu": [
+        {
+          "title": "Windows 16 color default",
+          "action": "theme",
+          "value": "default"
+        },
+        {
+          "title": "Hotdog stand",
+          "action": "theme",
+          "value": "hotdog-stand"
+        }
+      ]
+    }
   ]
+
+
 }
