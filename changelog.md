@@ -1,14 +1,14 @@
 Changelog
 =========
 
-0.3.0 (????-??-??)
+0.3.0 (2026-07-16)
 ------------------
 
 * Menus are now groups! Sorry! We have a menus on windows as well and this was
   getting confusing. Rename your 'menu' directory to 'group' and it should just
   work.
-* The window menu can now be dropdown menus and are dynamically generated.
-  This means custom menus are now possible from the JSON file.
+* The window menu can now be dropdown menus and are dynamically generated. This
+  means custom menus are now possible from the JSON file.
 * Secret hot dog stand theme!
 * Add icon for lldap.
 * Fix: opening an already-minimized window will now unminimize it.
