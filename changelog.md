@@ -10,6 +10,7 @@ Changelog
 * The window menu can now be dropdown menus and are dynamically generated. This
   will soon allow users to create custom menus.
 * Fix maximize bug.
+* Secret hot dog stand theme!
 
 
 0.2.0 (2026-06-30)

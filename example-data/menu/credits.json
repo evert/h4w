@@ -26,14 +26,9 @@
       "title": "Theme",
       "submenu": [
         {
-          "title": "Windows EGA default",
+          "title": "Windows 16 color default",
           "action": "theme",
           "value": "default"
-        },
-        {
-          "title": "Windows VGA default",
-          "action": "theme",
-          "value": "default256"
         },
         {
           "title": "Hotdog stand",

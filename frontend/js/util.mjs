@@ -71,6 +71,6 @@ export function setTheme(theme) {
     document.head.appendChild(linkElem);
   }
 
-  linkElem.href = `/css/themes/${theme}.css`;
+  linkElem.href = `/css/theme/${theme}.css`;
 
 }
